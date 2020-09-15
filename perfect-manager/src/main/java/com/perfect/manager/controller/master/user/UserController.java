@@ -1,6 +1,9 @@
 package com.perfect.manager.controller.master.user;
 
+import com.perfect.bean.bo.session.user.UserSessionBo;
+import com.perfect.bean.bo.session.user.rbac.PermissionMenuBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionMenuOperationBo;
+import com.perfect.bean.bo.session.user.rbac.PermissionOperationBo;
 import com.perfect.bean.entity.master.user.MUserEntity;
 import com.perfect.bean.pojo.result.JsonResult;
 import com.perfect.bean.result.utils.v1.ResultUtil;
@@ -15,6 +18,7 @@ import com.perfect.common.exception.PasswordException;
 import com.perfect.common.exception.UpdateErrorException;
 import com.perfect.common.utils.string.StringUtil;
 import com.perfect.core.service.client.user.IMUserService;
+import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionService;
 import com.perfect.framework.base.controller.v1.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author zxh
@@ -38,6 +43,9 @@ public class UserController extends BaseController {
     @Autowired
     private IMUserService service;
 
+    @Autowired
+    private IMUserPermissionService imUserPermissionService;
+
     @SysLogAnnotion("获取用户信息")
     @ApiOperation("获取用户信息")
     @GetMapping("/info")
@@ -48,10 +56,6 @@ public class UserController extends BaseController {
 
         /** 设置user session bean */
         userInfoVo.setUser_session_bean(getUserSession());
-
-        /** 设置user 权限数据，需要转换成树bean */
-        PermissionMenuOperationBo permissionMenuOperationBo = getUserPermission();
-        userInfoVo.setPermission_data(permissionMenuOperationBo);
 
         //        ResponseEntity<OAuth2AccessToken
         return ResponseEntity.ok().body(ResultUtil.OK(userInfoVo, JsonResultTypeConstants.NULL_NOT_OUT));
@@ -117,5 +121,35 @@ public class UserController extends BaseController {
         } else {
             throw new PasswordException("密码设置失败。");
         }
+    }
+
+    @SysLogAnnotion("获取顶部导航栏数据")
+    @ApiOperation("获取顶部导航栏数据")
+    @PostMapping("/topnav")
+    @ResponseBody
+    public ResponseEntity<JsonResult<List<PermissionMenuBo>>> getTopNav() {
+        List<PermissionMenuBo> user_permission_menu_topNav = imUserPermissionService.getPermissionMenuTopNav(getUserSession().getTenant_Id());
+        return ResponseEntity.ok().body(ResultUtil.OK(user_permission_menu_topNav));
+    }
+
+    @SysLogAnnotion("获取菜单权限和操作权限数据")
+    @ApiOperation("获取菜单权限和操作权限数据")
+    @PostMapping("/userpermission")
+    @ResponseBody
+    public ResponseEntity<JsonResult<PermissionMenuOperationBo>> getUserPermission() {
+        UserSessionBo bo = getUserSession();
+        PermissionMenuOperationBo permissionMenuOperationBo = new PermissionMenuOperationBo();
+        permissionMenuOperationBo.setSession_id(bo.getSession_id());
+        permissionMenuOperationBo.setStaff_id(bo.getStaff_Id());
+        permissionMenuOperationBo.setTenant_id(bo.getTenant_Id());
+
+        /** 菜单权限数据 */
+        List<PermissionMenuBo> user_permission_menu = imUserPermissionService.getPermissionMenu(bo.getStaff_Id(), bo.getTenant_Id());
+        permissionMenuOperationBo.setUser_permission_menu(user_permission_menu);
+        /** 操作权限数据  */
+        List<PermissionOperationBo> user_permission_operation = imUserPermissionService.getPermissionOperation(bo.getStaff_Id(), bo.getTenant_Id());
+        permissionMenuOperationBo.setUser_permission_operation(user_permission_operation);
+
+        return ResponseEntity.ok().body(ResultUtil.OK(permissionMenuOperationBo));
     }
 }

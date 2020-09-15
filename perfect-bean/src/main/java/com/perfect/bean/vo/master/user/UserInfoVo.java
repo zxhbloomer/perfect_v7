@@ -29,6 +29,4 @@ public class UserInfoVo extends BaseVo implements Serializable {
     private String name;
 
     private UserSessionBo user_session_bean;
-
-    private PermissionMenuOperationBo permission_data;
 }

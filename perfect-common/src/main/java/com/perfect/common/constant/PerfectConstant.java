@@ -81,7 +81,7 @@ public class PerfectConstant {
         public static final String MQ_CONSUME_RETURN_PREFIX = "PERFECT_MQ_CONSUME_RETURN_PREFIX";
 
         /** 菜单权限、操作权限 */
-        public static final String PERMISSION_MENU_OPERATION_PREFIX = "PERMISSION_MENU_OPERATION_PREFIX";
+//        public static final String PERMISSION_MENU_OPERATION_PREFIX = "PERMISSION_MENU_OPERATION_PREFIX";
     }
 
     /**

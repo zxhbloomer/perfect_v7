@@ -178,15 +178,6 @@ public class BaseController {
     }
 
     /**
-     * 获取当前登录用户的权限数据
-     * @return
-     */
-    public PermissionMenuOperationBo getUserPermission(){
-        PermissionMenuOperationBo bo = ServletUtil.getUserPermission();
-        return bo;
-    }
-
-    /**
      * 获取当前登录用户的session数据:租户数据
      * @return
      */
@@ -251,8 +242,6 @@ public class BaseController {
      * 获取user信息，权限信息，并保存到redis中
      * 1：userbean信息
      * 2：系统参数
-     * 3：菜单权限数据
-     * 4：操作权限数据
      * 执行usersession往session中保存的逻辑
      */
     @SysLogAnnotion("设置用户session，包含：用户、员工、租户、系统参数、菜单权限、操作权限数据")
@@ -282,29 +271,5 @@ public class BaseController {
         } else {
             session.setAttribute(key_session, userSessionBo);
         }
-
-        /** 权限设置 */
-        PermissionMenuOperationBo permissionMenuOperationBo = new PermissionMenuOperationBo();
-        permissionMenuOperationBo.setSession_id(sessionId);
-        permissionMenuOperationBo.setStaff_id(userSessionBo.getStaff_Id());
-        permissionMenuOperationBo.setTenant_id(userSessionBo.getTenant_Id());
-        /** 设置3：菜单权限数据  */
-        List<PermissionMenuBo> user_permission_menu_topNav = imUserPermissionService.getPermissionMenuTopNav(userSessionBo.getTenant_Id());
-        permissionMenuOperationBo.setUser_permission_top_nav(user_permission_menu_topNav);
-        List<PermissionMenuBo> user_permission_menu = imUserPermissionService.getPermissionMenu(userSessionBo.getStaff_Id(), userSessionBo.getTenant_Id());
-        permissionMenuOperationBo.setUser_permission_menu(user_permission_menu);
-        String default_page_path = imUserPermissionService.getPermissionMenuDefaultPage(userSessionBo.getTenant_Id());
-        permissionMenuOperationBo.setDefault_page(default_page_path);
-        /** 设置4：操作权限数据  */
-        List<PermissionOperationBo> user_permission_operation = imUserPermissionService.getPermissionOperation(userSessionBo.getStaff_Id(), userSessionBo.getTenant_Id());
-        permissionMenuOperationBo.setUser_permission_operation(user_permission_operation);
-
-        /** 把用户的权限保存到redis中，但不保存到session中，和session有关联 */
-        String key_permission = PerfectConstant.REDIS_PREFIX.PERMISSION_MENU_OPERATION_PREFIX + "_" + sessionId;
-        if (ServletUtil.getUserSession() != null) {
-            session.removeAttribute(key_permission);
-        }
-        // 存放数据到session redis 中，由于不能存放递归数据，所以存放递归前的数据
-        session.setAttribute(key_permission, permissionMenuOperationBo);
     }
 }
