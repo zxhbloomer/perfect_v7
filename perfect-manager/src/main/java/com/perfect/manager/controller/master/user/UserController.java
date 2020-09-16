@@ -50,7 +50,7 @@ public class UserController extends BaseController {
     @ApiOperation("获取用户信息")
     @GetMapping("/info")
     @ResponseBody
-    public ResponseEntity<JsonResult<UserInfoVo>> userInfo(@RequestParam("token") String token) {
+    public ResponseEntity<JsonResult<UserInfoVo>> userInfo(@RequestParam("token") String token, @RequestParam("path") String path) {
 
         UserInfoVo userInfoVo = service.getUserInfo(token);
 
