@@ -3,6 +3,7 @@ package com.perfect.core.mapper.master.rbac.permission.user;
 import com.perfect.bean.bo.session.user.rbac.PermissionMenuBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionMenuMetaBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionOperationBo;
+import com.perfect.bean.bo.session.user.rbac.PermissionTopNavDetailBo;
 import com.perfect.common.constant.PerfectDictConstant;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -22,20 +23,57 @@ import java.util.List;
 @Repository
 public interface MUserPermissionMapper {
 
-
+    /**
+     * 按所有的顶部导航栏，并传入路径，找到相应的被选中的顶部导航栏
+     * @param tenant_id
+     * @param path
+     * @return
+     */
     @Select("                                                                                    "
         + "          select t1.*,                                                                "
-        + "                 right(t1.code,2) nav_code,                                           "
-        + "                 CONCAT(@rownum := @rownum +1,'') AS `index`                          "
-        + "            from m_menu t1,                                                           "
-        + "                 (SELECT @rownum := 0) t2                                             "
+        + "                 CONCAT(@rownum := @rownum +1,'') AS `index`,                         "
+        + "                 t2.code active_code,                                                 "
+        + "  JSON_OBJECT('title',t1.meta_title,'icon',t1.meta_icon,'name',t1.meta_title) as meta "
+        + "            from m_menu t1                                                            "
+        + "       left join (                                                                    "
+        + "                   select left( code, 8 ) code,                                       "
+        + "                          tenant_id                                                   "
+        + "                     from m_menu                                                      "
+        + "                    where path = #{p2}                                                "
+        + "                      and (tenant_id = #{p1} or #{p1} is null)                        "
+        + "                 )  t2 on t1.code = t2.code                                           "
+        + "                      and t1.tenant_id = t2.tenant_id,                                "
+        + "                 (SELECT @rownum := 0) t3                                             "
         + "           where t1.type = '"+ PerfectDictConstant.DICT_SYS_MENU_TYPE_TOPNAV +"'      "
         + "             and (t1.tenant_id = #{p1} or #{p1} is null)                              "
         + "        order by t1.code                                                              "
         + "                                                                                      ")
-    List<PermissionMenuBo> getPermissionMenuTopNav(@Param("p1")Long tenant_id);
+    @Results({
+        @Result(property = "meta", column = "meta", javaType = PermissionMenuMetaBo.class, typeHandler = com.perfect.core.config.mybatis.typehandlers.PermissionMenuMetaBoTypeHandler.class),
+    })
+    List<PermissionTopNavDetailBo> getTopNavByPath(@Param("p1")Long tenant_id, @Param("p2")String path );
 
-    @Select("                                                                                                            "
+    /**
+     * 按所有的顶部导航栏
+     * @param tenant_id
+     * @return
+     */
+    @Select("                                                                                    "
+        + "          select t1.*,                                                                "
+        + "                 CONCAT(@rownum := @rownum +1,'') AS `index`,                         "
+        + "  JSON_OBJECT('title',t1.meta_title,'icon',t1.meta_icon,'name',t1.meta_title) as meta "
+        + "            from m_menu t1,                                                           "
+        + "                 (SELECT @rownum := 0) t3                                             "
+        + "           where t1.type = '"+ PerfectDictConstant.DICT_SYS_MENU_TYPE_TOPNAV +"'      "
+        + "             and (t1.tenant_id = #{p1} or #{p1} is null)                              "
+        + "        order by t1.code                                                              "
+        + "                                                                                      ")
+    @Results({
+        @Result(property = "meta", column = "meta", javaType = PermissionMenuMetaBo.class, typeHandler = com.perfect.core.config.mybatis.typehandlers.PermissionMenuMetaBoTypeHandler.class),
+    })
+    List<PermissionTopNavDetailBo> getTopNav(@Param("p1")Long tenant_id);
+
+    @Select("                                                                                                        "
         + "                    WITH recursive tab1 AS (                                                              "
         + "                        SELECT                                                                            "
         + "                               t0.id AS menu_id,                                                          "

@@ -152,9 +152,13 @@ public class PerfectDictConstant {
      * 菜单类型
      */
     public static final String DICT_SYS_MENU_TYPE = "sys_menu_type";
+    /** ROOT：根节点 */
     public static final String DICT_SYS_MENU_TYPE_ROOT = "R";
+    /** TOPNAV：顶部导航栏 */
     public static final String DICT_SYS_MENU_TYPE_TOPNAV = "T";
+    /** NODE：结点 */
     public static final String DICT_SYS_MENU_TYPE_NODE = "N";
+    /** PAGE：页面 */
     public static final String DICT_SYS_MENU_TYPE_PAGE = "P";
 
     /**

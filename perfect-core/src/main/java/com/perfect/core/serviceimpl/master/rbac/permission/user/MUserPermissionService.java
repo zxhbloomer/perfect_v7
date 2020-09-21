@@ -1,21 +1,12 @@
 package com.perfect.core.serviceimpl.master.rbac.permission.user;
 
-/**
- * 用户权限获取的逻辑实现
- * @ClassName: MUserPermissionService
- * @Description:
- * @Author: zxh
- * @date: 2020/8/26
- * @Version: 1.0
- */
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
-import com.perfect.bean.bo.session.user.rbac.PermissionMenuBo;
-import com.perfect.bean.bo.session.user.rbac.PermissionOperationBo;
+import com.perfect.bean.bo.session.user.rbac.*;
 import com.perfect.bean.entity.master.menu.MMenuEntity;
 import com.perfect.bean.utils.common.tree.TreeUtil;
+import com.perfect.common.constant.PerfectConstant;
 import com.perfect.core.mapper.master.menu.MMenuMapper;
 import com.perfect.core.mapper.master.rbac.permission.user.MUserPermissionMapper;
 import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionService;
@@ -27,8 +18,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * 用户权限获取的逻辑实现
  * @ClassName: MUserPermissionService
- * @Description: TODO
+ * @Description:
  * @Author: zxh
  * @date: 2020/8/26
  * @Version: 1.0
@@ -47,9 +39,12 @@ public class MUserPermissionService implements IMUserPermissionService {
      * 菜单权限数据，顶部导航栏
      */
     @Override
-    public List<PermissionMenuBo> getPermissionMenuTopNav(Long tenant_id) {
-        List<PermissionMenuBo> rtn = mapper.getPermissionMenuTopNav(tenant_id);
-        return rtn;
+    public PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type) {
+        PermissionAndTopNavBo permissionAndTopNavBo = new PermissionAndTopNavBo();
+        PermissionTopNavBo permissionTopNavBo = getTopNavData(tenant_id, pathOrIndex, type);
+        /** 设置顶部导航栏数据 */
+
+        return null;
     }
 
     /**
@@ -189,5 +184,50 @@ public class MUserPermissionService implements IMUserPermissionService {
         }
 
         return  rtn;
+    }
+
+    /**
+     * 设置顶部导航栏数据
+     * @param pathOrIndex
+     * @param type
+     * @return
+     */
+    private PermissionTopNavBo getTopNavData(Long tenant_id, String pathOrIndex, String type){
+
+        PermissionTopNavBo permissionTopNavBo = new PermissionTopNavBo();
+
+        List<PermissionTopNavDetailBo> topList;
+
+        /** 根据参数获取顶部导航栏数据 */
+        switch (type) {
+            case PerfectConstant.TOP_NAV.TOP_NAV_FIND_BY_PATH:
+                /** 按路径查询 */
+                /** 获取导航栏数据 */
+                topList = mapper.getTopNavByPath(tenant_id, pathOrIndex);
+                permissionTopNavBo.setData(topList);
+                /** 设置activeindex */
+                try{
+                    Collection<PermissionTopNavDetailBo> filter1 = Collections2.filter(topList, item -> item.getActive_code().equals(item.getCode()));
+                    PermissionTopNavDetailBo bo1 = Iterables.getOnlyElement(filter1);
+                    permissionTopNavBo.setActive_index(bo1.getIndex());
+                } catch (Exception e) {
+                    log.debug("没有找到数据，找到第一个topnav");
+                    permissionTopNavBo.setActive_index(topList.get(0).getIndex());
+                }
+                break;
+            case PerfectConstant.TOP_NAV.TOP_NAV_FIND_BY_INDEX:
+                /** 按排序查询 */
+                /** 获取导航栏数据 */
+                topList = mapper.getTopNav(tenant_id);
+                permissionTopNavBo.setData(topList);
+                Collection<PermissionTopNavDetailBo> filter2 = Collections2.filter(topList, item -> item.getIndex().equals(pathOrIndex));
+                PermissionTopNavDetailBo bo2 = Iterables.getOnlyElement(filter2);
+                permissionTopNavBo.setActive_index(bo2.getIndex());
+                break;
+            default:
+                break;
+        }
+
+        return permissionTopNavBo;
     }
 }

@@ -185,4 +185,18 @@ public class PerfectConstant {
             public static final String OPER_POSITION_STAFF = "用户组织机构关系表，成员维护";
         }
     }
+
+    /**
+     * 顶部导航栏类型
+     */
+    public class TOP_NAV {
+        /**
+         * 按路径查询
+         */
+        public static final String TOP_NAV_FIND_BY_PATH = "find_by_path";
+        /**
+         * 按排序查询
+         */
+        public static final String TOP_NAV_FIND_BY_INDEX = "find_by_index";
+    }
 }

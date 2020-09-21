@@ -1,8 +1,8 @@
 package com.perfect.manager.controller.master.user;
 
 import com.perfect.bean.bo.session.user.UserSessionBo;
+import com.perfect.bean.bo.session.user.rbac.PermissionAndTopNavBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionMenuBo;
-import com.perfect.bean.bo.session.user.rbac.PermissionMenuOperationBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionOperationBo;
 import com.perfect.bean.entity.master.user.MUserEntity;
 import com.perfect.bean.pojo.result.JsonResult;
@@ -50,14 +50,13 @@ public class UserController extends BaseController {
     @ApiOperation("获取用户信息")
     @GetMapping("/info")
     @ResponseBody
-    public ResponseEntity<JsonResult<UserInfoVo>> userInfo(@RequestParam("token") String token, @RequestParam("path") String path) {
+    public ResponseEntity<JsonResult<UserInfoVo>> userInfo(@RequestParam("token") String token) {
 
         UserInfoVo userInfoVo = service.getUserInfo(token);
 
         /** 设置user session bean */
         userInfoVo.setUser_session_bean(getUserSession());
 
-        //        ResponseEntity<OAuth2AccessToken
         return ResponseEntity.ok().body(ResultUtil.OK(userInfoVo, JsonResultTypeConstants.NULL_NOT_OUT));
     }
 
@@ -125,31 +124,32 @@ public class UserController extends BaseController {
 
     @SysLogAnnotion("获取顶部导航栏数据")
     @ApiOperation("获取顶部导航栏数据")
-    @PostMapping("/topnav")
+    @PostMapping("/permiss_topnav")
     @ResponseBody
-    public ResponseEntity<JsonResult<List<PermissionMenuBo>>> getTopNav() {
-        List<PermissionMenuBo> user_permission_menu_topNav = imUserPermissionService.getPermissionMenuTopNav(getUserSession().getTenant_Id());
+    public ResponseEntity<JsonResult<PermissionAndTopNavBo>> getPermissionAndSetTopNavAction(@RequestParam("pathOrIndex") String pathOrIndex, @RequestParam("type") String type) {
+
+        PermissionAndTopNavBo user_permission_menu_topNav = imUserPermissionService.getPermissionMenuTopNav(getUserSession().getTenant_Id(), pathOrIndex, type);
         return ResponseEntity.ok().body(ResultUtil.OK(user_permission_menu_topNav));
     }
 
-    @SysLogAnnotion("获取菜单权限和操作权限数据")
-    @ApiOperation("获取菜单权限和操作权限数据")
-    @PostMapping("/userpermission")
-    @ResponseBody
-    public ResponseEntity<JsonResult<PermissionMenuOperationBo>> getUserPermission() {
-        UserSessionBo bo = getUserSession();
-        PermissionMenuOperationBo permissionMenuOperationBo = new PermissionMenuOperationBo();
-        permissionMenuOperationBo.setSession_id(bo.getSession_id());
-        permissionMenuOperationBo.setStaff_id(bo.getStaff_Id());
-        permissionMenuOperationBo.setTenant_id(bo.getTenant_Id());
-
-        /** 菜单权限数据 */
-        List<PermissionMenuBo> user_permission_menu = imUserPermissionService.getPermissionMenu(bo.getStaff_Id(), bo.getTenant_Id());
-        permissionMenuOperationBo.setUser_permission_menu(user_permission_menu);
-        /** 操作权限数据  */
-        List<PermissionOperationBo> user_permission_operation = imUserPermissionService.getPermissionOperation(bo.getStaff_Id(), bo.getTenant_Id());
-        permissionMenuOperationBo.setUser_permission_operation(user_permission_operation);
-
-        return ResponseEntity.ok().body(ResultUtil.OK(permissionMenuOperationBo));
-    }
+//    @SysLogAnnotion("获取菜单权限和操作权限数据")
+//    @ApiOperation("获取菜单权限和操作权限数据")
+//    @PostMapping("/userpermission")
+//    @ResponseBody
+//    public ResponseEntity<JsonResult<PermissionMenuOperationBo>> getUserPermission() {
+//        UserSessionBo bo = getUserSession();
+//        PermissionMenuOperationBo permissionMenuOperationBo = new PermissionMenuOperationBo();
+//        permissionMenuOperationBo.setSession_id(bo.getSession_id());
+//        permissionMenuOperationBo.setStaff_id(bo.getStaff_Id());
+//        permissionMenuOperationBo.setTenant_id(bo.getTenant_Id());
+//
+//        /** 菜单权限数据 */
+//        List<PermissionMenuBo> user_permission_menu = imUserPermissionService.getPermissionMenu(bo.getStaff_Id(), bo.getTenant_Id());
+//        permissionMenuOperationBo.setUser_permission_menu(user_permission_menu);
+//        /** 操作权限数据  */
+//        List<PermissionOperationBo> user_permission_operation = imUserPermissionService.getPermissionOperation(bo.getStaff_Id(), bo.getTenant_Id());
+//        permissionMenuOperationBo.setUser_permission_operation(user_permission_operation);
+//
+//        return ResponseEntity.ok().body(ResultUtil.OK(permissionMenuOperationBo));
+//    }
 }

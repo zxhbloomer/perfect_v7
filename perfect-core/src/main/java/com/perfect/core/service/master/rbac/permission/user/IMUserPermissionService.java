@@ -1,5 +1,6 @@
 package com.perfect.core.service.master.rbac.permission.user;
 
+import com.perfect.bean.bo.session.user.rbac.PermissionAndTopNavBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionMenuBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionOperationBo;
 
@@ -17,7 +18,7 @@ public interface IMUserPermissionService  {
     /**
      * 菜单权限数据，顶部导航栏
      */
-    List<PermissionMenuBo> getPermissionMenuTopNav(Long tenant_id);
+    PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type);
 
     /**
      * 菜单权限数据

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 菜单、权限数据
+ * 顶部导航栏、菜单、权限数据
  * @ClassName: PermissionBo
  * @Description:
  * @Author: zxh
@@ -16,9 +16,9 @@ import java.util.List;
  * @Version: 1.0
  */
 @Data
-@ApiModel(value = "菜单、权限数据", description = "菜单、权限数据")
+@ApiModel(value = "顶部导航栏、菜单、权限数据", description = "顶部导航栏、菜单、权限数据")
 @EqualsAndHashCode(callSuper=false)
-public class PermissionMenuOperationBo implements Serializable {
+public class PermissionAndTopNavBo implements Serializable {
 
     private static final long serialVersionUID = 4041344270066977596L;
 
@@ -38,9 +38,9 @@ public class PermissionMenuOperationBo implements Serializable {
     private Long tenant_id;
 
     /**
-     * 菜单权限数据
+     * 顶部导航栏数据
      */
-    private List<PermissionMenuBo> user_permission_top_nav;
+    private PermissionTopNavBo top_nav_data;
 
     /**
      * 菜单权限数据

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 顶部导航栏数据
@@ -19,18 +18,31 @@ import java.util.List;
 @Data
 @ApiModel(value = "顶部导航栏数据", description = "顶部导航栏数据")
 @EqualsAndHashCode(callSuper=false)
-public class PermissionTopNavBo implements Serializable {
+public class PermissionTopNavDetailBo extends TreeNode implements Serializable {
 
-    private static final long serialVersionUID = 1207488879093213595L;
+    private static final long serialVersionUID = -2154124049072701204L;
 
-    /**
-     * 顶部导航栏数据
-     */
-    private List<PermissionTopNavDetailBo> data;
+    private Long id;
 
     /**
-     * 默认高亮的顶部导航栏
+     * 顶部导航栏的rownum_char，index
      */
-    private String active_index;
+    private String index;
+
+    /**
+     * 菜单类型
+     * T:顶部导航栏
+     * R：根节点
+     * P：页面
+     */
+    private String type;
+
+    private String active_code;
+
+    /**
+     * 菜单meta数据
+     */
+    private PermissionMenuMetaBo meta;
+
 
 }
