@@ -18,7 +18,7 @@ public interface IMUserPermissionService  {
     /**
      * 菜单权限数据，顶部导航栏
      */
-    PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type);
+    PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type, Long staff_id);
 
     /**
      * 菜单权限数据

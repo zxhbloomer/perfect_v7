@@ -127,8 +127,8 @@ public class UserController extends BaseController {
     @PostMapping("/permiss_topnav")
     @ResponseBody
     public ResponseEntity<JsonResult<PermissionAndTopNavBo>> getPermissionAndSetTopNavAction(@RequestParam("pathOrIndex") String pathOrIndex, @RequestParam("type") String type) {
-
-        PermissionAndTopNavBo user_permission_menu_topNav = imUserPermissionService.getPermissionMenuTopNav(getUserSession().getTenant_Id(), pathOrIndex, type);
+        UserSessionBo bo = getUserSession();
+        PermissionAndTopNavBo user_permission_menu_topNav = imUserPermissionService.getPermissionMenuTopNav(getUserSession().getTenant_Id(), pathOrIndex, type, bo.getStaff_Id());
         return ResponseEntity.ok().body(ResultUtil.OK(user_permission_menu_topNav));
     }
 

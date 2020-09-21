@@ -39,14 +39,15 @@ public class MUserPermissionService implements IMUserPermissionService {
      * 菜单权限数据，顶部导航栏
      */
     @Override
-    public PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type) {
+    public PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type, Long staff_id) {
         PermissionAndTopNavBo permissionAndTopNavBo = new PermissionAndTopNavBo();
-        /** 设置顶部导航栏数据 */
+        /** 获取顶部导航栏数据 */
         PermissionTopNavBo permissionTopNavBo = getTopNavData(tenant_id, pathOrIndex, type);
         permissionAndTopNavBo.setTop_nav_data(permissionTopNavBo);
 
-
-
+        /** 获取菜单数据 */
+        List<PermissionMenuBo> permissionMenuBoList = getPermissionMenu(staff_id, tenant_id);
+        permissionAndTopNavBo.setUser_permission_menu(permissionMenuBoList);
         return permissionAndTopNavBo;
     }
 
