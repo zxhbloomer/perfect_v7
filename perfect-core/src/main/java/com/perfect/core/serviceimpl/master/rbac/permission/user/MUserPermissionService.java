@@ -41,10 +41,13 @@ public class MUserPermissionService implements IMUserPermissionService {
     @Override
     public PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type) {
         PermissionAndTopNavBo permissionAndTopNavBo = new PermissionAndTopNavBo();
-        PermissionTopNavBo permissionTopNavBo = getTopNavData(tenant_id, pathOrIndex, type);
         /** 设置顶部导航栏数据 */
+        PermissionTopNavBo permissionTopNavBo = getTopNavData(tenant_id, pathOrIndex, type);
+        permissionAndTopNavBo.setTop_nav_data(permissionTopNavBo);
 
-        return null;
+
+
+        return permissionAndTopNavBo;
     }
 
     /**
