@@ -23,7 +23,7 @@ public interface IMUserPermissionService  {
     /**
      * 菜单权限数据
      */
-    List<PermissionMenuBo> getPermissionMenu(Long staff_id, Long tenant_id);
+    List<PermissionMenuBo> getPermissionMenu(Long staff_id, Long tenant_id, String top_nav_code);
 
     /**
      * 操作权限数据

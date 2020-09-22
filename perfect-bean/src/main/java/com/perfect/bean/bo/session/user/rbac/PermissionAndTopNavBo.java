@@ -55,5 +55,5 @@ public class PermissionAndTopNavBo implements Serializable {
     /**
      * 默认页面
      */
-    private String default_page;
+    private PermissionMenuBo redirect;
 }

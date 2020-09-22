@@ -32,5 +32,6 @@ public class PermissionTopNavBo implements Serializable {
      * 默认高亮的顶部导航栏
      */
     private String active_index;
+    private String active_code;
 
 }

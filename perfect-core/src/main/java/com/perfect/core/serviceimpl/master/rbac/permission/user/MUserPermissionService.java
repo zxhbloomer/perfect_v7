@@ -36,7 +36,7 @@ public class MUserPermissionService implements IMUserPermissionService {
     private MMenuMapper mMenuMapper;
 
     /**
-     * 菜单权限数据，顶部导航栏
+     * 菜单权限数据，操作权限数据，顶部导航栏数据
      */
     @Override
     public PermissionAndTopNavBo getPermissionMenuTopNav(Long tenant_id, String pathOrIndex, String type, Long staff_id) {
@@ -46,23 +46,52 @@ public class MUserPermissionService implements IMUserPermissionService {
         permissionAndTopNavBo.setTop_nav_data(permissionTopNavBo);
 
         /** 获取菜单数据 */
-        List<PermissionMenuBo> permissionMenuBoList = getPermissionMenu(staff_id, tenant_id);
+        List<PermissionMenuBo> permissionMenuBoList = getPermissionMenu(staff_id, tenant_id, permissionTopNavBo.getActive_code());
         permissionAndTopNavBo.setUser_permission_menu(permissionMenuBoList);
+
+        /** 获取操作权限数据 */
+        List<PermissionOperationBo> permissionOperationBoList = getPermissionOperation(staff_id, tenant_id);
+        permissionAndTopNavBo.setUser_permission_operation(permissionOperationBoList);
+
+        /** 获取redirect数据 */
+        PermissionMenuBo redirect = getRedirectBean(tenant_id);
+        permissionAndTopNavBo.setRedirect(redirect);
+
         return permissionAndTopNavBo;
+    }
+
+    /**
+     * 获取redirect的数据
+     *
+     * @param tenant_id
+     * @return
+     */
+    private PermissionMenuBo getRedirectBean(Long tenant_id){
+        // TODO:测试代码
+        PermissionMenuBo redirect = new PermissionMenuBo();
+        redirect.setRedirect("/dashboard");
+        redirect.setPath("dashboard");
+        redirect.setComponent("/01_dashboard/index");
+        PermissionMenuMetaBo redirect_meta = new PermissionMenuMetaBo();
+        redirect_meta.setTitle("首页");
+        redirect_meta.setIcon("dashboard");
+        redirect_meta.setAffix(true);
+        redirect.setMeta(redirect_meta);
+        return redirect;
     }
 
     /**
      * 菜单权限数据
      */
     @Override
-    public List<PermissionMenuBo> getPermissionMenu(Long staff_id, Long tenant_id) {
+    public List<PermissionMenuBo> getPermissionMenu(Long staff_id, Long tenant_id, String top_nav_code) {
         /** 判断是否有自定义菜单 */
 
         /** 如果没有，获取该员工的权限：（部门权限+ 岗位权限+ 员工权限+ 角色权限）- 排除权限 */
         // 获取系统菜单
-        List<PermissionMenuBo> sysMenus = mapper.getSystemMenu(tenant_id);
+        List<PermissionMenuBo> sysMenus = mapper.getSystemMenu(tenant_id, top_nav_code);
         // 部门权限defaultActive
-        List<PermissionMenuBo> dept_permission_menu = mapper.getPermissionMenu(staff_id, tenant_id);
+        List<PermissionMenuBo> dept_permission_menu = mapper.getPermissionMenu(staff_id, tenant_id, top_nav_code);
         // 岗位权限
         List<PermissionMenuBo> position_permission_menu = null;
         // 员工权限
@@ -214,9 +243,11 @@ public class MUserPermissionService implements IMUserPermissionService {
                     Collection<PermissionTopNavDetailBo> filter1 = Collections2.filter(topList, item -> item.getActive_code().equals(item.getCode()));
                     PermissionTopNavDetailBo bo1 = Iterables.getOnlyElement(filter1);
                     permissionTopNavBo.setActive_index(bo1.getIndex());
+                    permissionTopNavBo.setActive_code(bo1.getCode());
                 } catch (Exception e) {
                     log.debug("没有找到数据，找到第一个topnav");
                     permissionTopNavBo.setActive_index(topList.get(0).getIndex());
+                    permissionTopNavBo.setActive_code(topList.get(0).getCode());
                 }
                 break;
             case PerfectConstant.TOP_NAV.TOP_NAV_FIND_BY_INDEX:
@@ -227,6 +258,7 @@ public class MUserPermissionService implements IMUserPermissionService {
                 Collection<PermissionTopNavDetailBo> filter2 = Collections2.filter(topList, item -> item.getIndex().equals(pathOrIndex));
                 PermissionTopNavDetailBo bo2 = Iterables.getOnlyElement(filter2);
                 permissionTopNavBo.setActive_index(bo2.getIndex());
+                permissionTopNavBo.setActive_code(bo2.getCode());
                 break;
             default:
                 break;

@@ -143,12 +143,13 @@ public interface MUserPermissionMapper {
         + "                  and t2.tenant_id = t3.tenant_id                                                         "
         + "                 WHERE TRUE                                                                               "
         + "                   AND ( t2.tenant_id = #{p1} or #{p1} is null )                                          "
+        + "                   AND t2.code like CONCAT (#{p2},'%')                                                    "
         + "              ORDER BY t2.CODE;                                                                           "
         + "                ")
     @Results({
         @Result(property = "meta", column = "meta", javaType = PermissionMenuMetaBo.class, typeHandler = com.perfect.core.config.mybatis.typehandlers.PermissionMenuMetaBoTypeHandler.class),
     })
-    List<PermissionMenuBo> getSystemMenu(@Param("p1")Long tenant_id);
+    List<PermissionMenuBo> getSystemMenu(@Param("p1") Long tenant_id, @Param("p2") String top_nav_code);
 
     /**
      * 获取菜单权限
@@ -192,12 +193,13 @@ public interface MUserPermissionMapper {
         + "              WHERE TRUE                                                                                      "
         + "                AND ( t2.tenant_id = #{p2} or #{p2} is null )                                                 "
         + "                AND ( t2.is_enable = true )                                                                   "
+        + "                AND t2.code like CONCAT (#{p3},'%')                                                           "
         + "           ORDER BY t2.CODE                                                                                   "
         + "                ")
     @Results({
         @Result(property = "meta", column = "meta", javaType = PermissionMenuMetaBo.class, typeHandler = com.perfect.core.config.mybatis.typehandlers.PermissionMenuMetaBoTypeHandler.class),
     })
-    List<PermissionMenuBo> getPermissionMenu(@Param("p1") Long staff_id,@Param("p2")Long tenant_id);
+    List<PermissionMenuBo> getPermissionMenu(@Param("p1") Long staff_id,@Param("p2")Long tenant_id, @Param("p3") String top_nav_code);
 
 
     @Select("                                     "
