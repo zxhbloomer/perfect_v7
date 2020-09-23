@@ -24,6 +24,30 @@ import java.util.List;
 public interface MUserPermissionMapper {
 
     /**
+     * 获取所有路由数据
+     * @param tenant_id
+     * @return
+     */
+    @Select("                                                                                                        "
+        + "        SELECT                                                                                            "
+        + "               t1.id,                                                                                     "
+        + "               t1.CODE,                                                                                   "
+        + "               t1.NAME,                                                                                   "
+        + "               t1.path,                                                                                   "
+        + "               t1.route_name,                                                                             "
+        + "               t1.component,                                                                              "
+        + "               t1.affix ,                                                                                 "
+        + "   JSON_OBJECT('title',t1.meta_title,'icon',t1.meta_icon,'affix',t1.affix,'name',t1.meta_title) as meta   "
+        + "          FROM m_menu t1                                                                                  "
+        + "         where t1.type = '"+ PerfectDictConstant.DICT_SYS_MENU_TYPE_PAGE +"'                              "
+        + "           and (t1.tenant_id = #{p1} or #{p1} is null)                                                    "
+        + "                                                                                  ")
+    @Results({
+        @Result(property = "meta", column = "meta", javaType = PermissionMenuMetaBo.class, typeHandler = com.perfect.core.config.mybatis.typehandlers.PermissionMenuMetaBoTypeHandler.class),
+    })
+    List<PermissionMenuBo> getAllRouters(@Param("p1")Long tenant_id);
+
+    /**
      * 按所有的顶部导航栏，并传入路径，找到相应的被选中的顶部导航栏
      * @param tenant_id
      * @param path
@@ -144,6 +168,7 @@ public interface MUserPermissionMapper {
         + "                 WHERE TRUE                                                                               "
         + "                   AND ( t2.tenant_id = #{p1} or #{p1} is null )                                          "
         + "                   AND t2.code like CONCAT (#{p2},'%')                                                    "
+        + "                   AND t2.code <> #{p2}                                                                   "
         + "              ORDER BY t2.CODE;                                                                           "
         + "                ")
     @Results({
@@ -194,6 +219,7 @@ public interface MUserPermissionMapper {
         + "                AND ( t2.tenant_id = #{p2} or #{p2} is null )                                                 "
         + "                AND ( t2.is_enable = true )                                                                   "
         + "                AND t2.code like CONCAT (#{p3},'%')                                                           "
+        + "                AND t2.code <> #{p3}                                                                          "
         + "           ORDER BY t2.CODE                                                                                   "
         + "                ")
     @Results({

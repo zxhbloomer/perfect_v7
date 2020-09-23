@@ -49,6 +49,10 @@ public class MUserPermissionService implements IMUserPermissionService {
         List<PermissionMenuBo> permissionMenuBoList = getPermissionMenu(staff_id, tenant_id, permissionTopNavBo.getActive_code());
         permissionAndTopNavBo.setUser_permission_menu(permissionMenuBoList);
 
+        /** 获取所有路由数据 */
+        List<PermissionMenuBo> all_routers = getAllRoutersBean(tenant_id);
+        permissionAndTopNavBo.setAll_routers(all_routers);
+
         /** 获取操作权限数据 */
         List<PermissionOperationBo> permissionOperationBoList = getPermissionOperation(staff_id, tenant_id);
         permissionAndTopNavBo.setUser_permission_operation(permissionOperationBoList);
@@ -58,6 +62,15 @@ public class MUserPermissionService implements IMUserPermissionService {
         permissionAndTopNavBo.setRedirect(redirect);
 
         return permissionAndTopNavBo;
+    }
+
+    /**
+     * 获取所有路由数据
+     * @param tenant_id
+     * @return
+     */
+    private List<PermissionMenuBo> getAllRoutersBean(Long tenant_id){
+        return mapper.getAllRouters(tenant_id);
     }
 
     /**

@@ -48,6 +48,11 @@ public class PermissionAndTopNavBo implements Serializable {
     private List<PermissionMenuBo> user_permission_menu;
 
     /**
+     * 所有路由数据
+     */
+    private List<PermissionMenuBo> all_routers;
+
+    /**
      * 操作权限数据
      */
     private List<PermissionOperationBo> user_permission_operation;
