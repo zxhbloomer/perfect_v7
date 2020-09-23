@@ -1,6 +1,7 @@
 package com.perfect.core.serviceimpl.master.rbac.permission.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.perfect.bean.bo.session.user.rbac.*;
@@ -12,6 +13,7 @@ import com.perfect.core.mapper.master.rbac.permission.user.MUserPermissionMapper
 import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -253,7 +255,17 @@ public class MUserPermissionService implements IMUserPermissionService {
                 permissionTopNavBo.setData(topList);
                 /** 设置activeindex */
                 try{
-                    Collection<PermissionTopNavDetailBo> filter1 = Collections2.filter(topList, item -> item.getActive_code().equals(item.getCode()));
+                    Collection<PermissionTopNavDetailBo> filter1 = Collections2.filter(topList, new Predicate<PermissionTopNavDetailBo>(){
+                        @Override
+                        public boolean apply(PermissionTopNavDetailBo input) {
+                            if(input.getCode().equals(input.getActive_code())){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }
+                    });
+
                     PermissionTopNavDetailBo bo1 = Iterables.getOnlyElement(filter1);
                     permissionTopNavBo.setActive_index(bo1.getIndex());
                     permissionTopNavBo.setActive_code(bo1.getCode());
