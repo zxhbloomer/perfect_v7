@@ -61,4 +61,9 @@ public class PermissionAndTopNavBo implements Serializable {
      * 默认页面
      */
     private PermissionMenuBo redirect;
+
+    /**
+     * 所有节点的id，为页面上自动展开菜单服务
+     */
+    private String[] nodes_id;
 }

@@ -48,6 +48,20 @@ public interface MUserPermissionMapper {
     List<PermissionMenuBo> getAllRouters(@Param("p1")Long tenant_id);
 
     /**
+     * 获取所有路由数据
+     * @param tenant_id
+     * @return
+     */
+    @Select("                                                                                                        "
+        + "        SELECT                                                                                            "
+        + "               CONCAT(t1.id,'') as id                                                                     "
+        + "          FROM m_menu t1                                                                                  "
+        + "         where t1.type = '"+ PerfectDictConstant.DICT_SYS_MENU_TYPE_NODE +"'                              "
+        + "           and (t1.tenant_id = #{p1} or #{p1} is null)                                                    "
+        + "                                                                                  ")
+    List<String> getAllNodesId(@Param("p1")Long tenant_id);
+
+    /**
      * 按所有的顶部导航栏，并传入路径，找到相应的被选中的顶部导航栏
      * @param tenant_id
      * @param path

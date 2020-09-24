@@ -51,6 +51,11 @@ public class MUserPermissionService implements IMUserPermissionService {
         List<PermissionMenuBo> permissionMenuBoList = getPermissionMenu(staff_id, tenant_id, permissionTopNavBo.getActive_code());
         permissionAndTopNavBo.setUser_permission_menu(permissionMenuBoList);
 
+        /** 获取所有nodes的id，为页面上展开所有的菜单服务 */
+        List<String> allNodesId = getAllNodesId(tenant_id);
+        permissionAndTopNavBo.setNodes_id(allNodesId.toArray(new String[allNodesId.size()]));
+
+
         /** 获取所有路由数据 */
         List<PermissionMenuBo> all_routers = getAllRoutersBean(tenant_id);
         permissionAndTopNavBo.setAll_routers(all_routers);
@@ -73,6 +78,15 @@ public class MUserPermissionService implements IMUserPermissionService {
      */
     private List<PermissionMenuBo> getAllRoutersBean(Long tenant_id){
         return mapper.getAllRouters(tenant_id);
+    }
+
+    /**
+     * 获取所有nodes的id，为页面上展开所有的菜单服务
+     * @param tenant_id
+     * @return
+     */
+    private List<String> getAllNodesId(Long tenant_id){
+        return mapper.getAllNodesId(tenant_id);
     }
 
     /**
