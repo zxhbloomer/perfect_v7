@@ -76,16 +76,6 @@ public class PermissionMenuBo extends TreeNode implements Serializable {
     private String path;
 
     /**
-     * full_path
-     */
-    private String full_path;
-
-    /**
-     * 默认打开页面
-     */
-    private Boolean default_open;
-
-    /**
      * route_name
      */
     private String route_name;

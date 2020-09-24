@@ -125,24 +125,9 @@ public class OperationMenuDataVo extends TreeNode implements Serializable {
     private String page_info;
 
     /**
-     * 父结点请求地址
-     */
-    private String parent_path;
-
-    /**
      * 请求地址
      */
     private String path;
-
-    /**
-     * 完整地址
-     */
-    private String full_path;
-
-    /**
-     * 默认打开页面
-     */
-    private Boolean default_open;
 
     /**
      * 路由名，需要唯一，很重要，且需要vue这里手工录入

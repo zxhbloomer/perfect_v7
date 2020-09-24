@@ -195,7 +195,7 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
 
         // 设置path
         entity.setPath("/");
-        entity.setFull_path("/");
+
         // 获取id
         int insertCount = mapper.insert(entity);
         if(insertCount ==0){
@@ -256,9 +256,7 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
         entity.setType(PerfectDictConstant.DICT_SYS_MENU_TYPE_TOPNAV);
 
         // 设置路径
-        entity.setParent_path(vo.getParent_path());
         entity.setPath(vo.getPath());
-        entity.setFull_path(vo.getFull_path());
 
         // 保存
         if(mapper.insert(entity) == 0){
@@ -320,9 +318,7 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
         entity.setComponent(null);
 
         // 设置路径
-        entity.setParent_path(vo.getParent_path());
         entity.setPath(vo.getPath());
-        entity.setFull_path(vo.getFull_path());
 
         // 保存
         if(mapper.insert(entity) == 0){
@@ -378,9 +374,7 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
         entity.setType(PerfectDictConstant.DICT_SYS_MENU_TYPE_PAGE);
 
         // 设置路径
-        entity.setParent_path(vo.getParent_path());
         entity.setPath(vo.getPath());
-        entity.setFull_path(vo.getFull_path());
 
         // 设置路由名，自动生成
         entity.setRoute_name(mMenuRouteNameAutoCode.autoCode().getCode());
@@ -461,14 +455,14 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
                 // 新增场合
                 // url check
                 if(countUrl(entity, moduleType) >= 1) {
-                    return CheckResultUtil.NG("新增保存出错：请求地址【"+ entity.getFull_path() +"】出现重复!", entity.getName());
+                    return CheckResultUtil.NG("新增保存出错：请求地址【"+ entity.getPath() +"】出现重复!", entity.getName());
                 }
                 break;
             case CheckResult.UPDATE_CHECK_TYPE:
                 // 更新场合
                 // url check
                 if(countUrl(entity, moduleType) >= 1) {
-                    return CheckResultUtil.NG("更新保存出错：请求地址【"+ entity.getFull_path() +"】出现重复!", entity.getName());
+                    return CheckResultUtil.NG("更新保存出错：请求地址【"+ entity.getPath() +"】出现重复!", entity.getName());
                 }
                 break;
             default:
@@ -484,7 +478,7 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
      */
     private Integer countUrl(MMenuEntity entity, String moduleType){
         return mapper.selectCount(new QueryWrapper<MMenuEntity>()
-            .eq("full_path", entity.getFull_path())
+            .eq("path", entity.getPath())
             .eq(entity.getTenant_id() == null ? false:true,"tenant_id", entity.getTenant_id())
             .ne(CheckResult.UPDATE_CHECK_TYPE.equals(moduleType) ? true:false, "root_id", entity.getRoot_id())
         );

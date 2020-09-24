@@ -118,28 +118,10 @@ public class MPermissionMenuEntity implements Serializable {
     private String page_code;
 
     /**
-     * 父结点请求地址
-     */
-    @TableField("parent_path")
-    private String parent_path;
-
-    /**
      * 请求地址
      */
     @TableField("path")
     private String path;
-
-    /**
-     * 完整地址
-     */
-    @TableField("full_path")
-    private String full_path;
-
-    /**
-     * 默认打开页面
-     */
-    @TableField("default_open")
-    private Boolean default_open;
 
     /**
      * 路由名，需要唯一，很重要，且需要vue这里手工录入

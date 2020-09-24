@@ -183,7 +183,7 @@ public class MUserPermissionService implements IMUserPermissionService {
          * */
 
 
-        return mMenuEntity.getFull_path();
+        return mMenuEntity.getPath();
     }
 
     /**
