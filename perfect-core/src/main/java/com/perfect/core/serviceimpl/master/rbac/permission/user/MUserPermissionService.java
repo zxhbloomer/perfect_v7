@@ -105,6 +105,7 @@ public class MUserPermissionService implements IMUserPermissionService {
         redirect_meta.setTitle("首页");
         redirect_meta.setIcon("dashboard");
         redirect_meta.setAffix(true);
+        redirect_meta.setActive_topnav_index("1");
         redirect.setMeta(redirect_meta);
         return redirect;
     }
