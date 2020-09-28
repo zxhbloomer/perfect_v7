@@ -27,7 +27,7 @@ public class CheckResult implements Serializable {
     public static final String COPY_INSERT_CHECK_TYPE = "COPY_INSERT_CHECK_TYPE";
     public static final String OTHER_CHECK_TYPE = "OTHER_CHECK_TYPE";
 
-    private static final long serialVersionUID = -3879117049651813655L;
+    private static final long serialVersionUID = 1505396357464554154L;
 
     /** 返回消息：返回的消息 */
     private String message;

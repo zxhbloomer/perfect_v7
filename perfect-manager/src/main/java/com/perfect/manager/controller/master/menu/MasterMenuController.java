@@ -1,11 +1,13 @@
 package com.perfect.manager.controller.master.menu;
 
 import com.perfect.bean.entity.master.menu.MMenuEntity;
+import com.perfect.bean.pojo.result.InsertOrUpdateResult;
 import com.perfect.bean.pojo.result.InsertResult;
 import com.perfect.bean.pojo.result.JsonResult;
 import com.perfect.bean.pojo.result.UpdateResult;
 import com.perfect.bean.result.utils.v1.ResultUtil;
 import com.perfect.bean.vo.master.menu.MMenuDataVo;
+import com.perfect.bean.vo.master.menu.MMenuRedirectVo;
 import com.perfect.bean.vo.master.menu.MMenuVo;
 import com.perfect.common.annotations.RepeatSubmitAnnotion;
 import com.perfect.common.annotations.SysLogAnnotion;
@@ -156,5 +158,19 @@ public class MasterMenuController extends BaseController {
     public ResponseEntity<JsonResult<String>> dragsave(@RequestBody(required = false) List<MMenuDataVo> beans) {
         service.dragsave(beans);
         return ResponseEntity.ok().body(ResultUtil.OK("拖拽更新成功"));
+    }
+
+    @SysLogAnnotion("菜单重定向更新保存")
+    @ApiOperation("菜单重定向更新保存")
+    @PostMapping("/redirect/save")
+    @ResponseBody
+    @RepeatSubmitAnnotion
+    public ResponseEntity<JsonResult<MMenuRedirectVo>> saveRedirect(@RequestBody(required = false) MMenuRedirectVo bean) {
+        InsertOrUpdateResult<MMenuRedirectVo> rtn = service.saveRedirect(bean);
+        if(rtn.isSuccess()){
+            return ResponseEntity.ok().body(ResultUtil.OK(rtn.getData(),"菜单重定向更新保存成功"));
+        } else {
+            throw new UpdateErrorException("保存的数据已经被修改，请查询后重新编辑更新。");
+        }
     }
 }

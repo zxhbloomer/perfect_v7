@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class InsertResult<T> implements Serializable {
 
-    private static final long serialVersionUID = 3473646590534243209L;
+    private static final long serialVersionUID = 8670252391925885366L;
 
     /** 返回消息：返回的消息 */
     private String message;

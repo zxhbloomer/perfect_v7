@@ -3,9 +3,11 @@ package com.perfect.core.service.master.menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfect.bean.entity.master.menu.MMenuEntity;
 import com.perfect.bean.pojo.result.DeleteResult;
+import com.perfect.bean.pojo.result.InsertOrUpdateResult;
 import com.perfect.bean.pojo.result.InsertResult;
 import com.perfect.bean.pojo.result.UpdateResult;
 import com.perfect.bean.vo.master.menu.MMenuDataVo;
+import com.perfect.bean.vo.master.menu.MMenuRedirectVo;
 import com.perfect.bean.vo.master.menu.MMenuVo;
 
 import java.util.List;
@@ -97,4 +99,11 @@ public interface IMMenuService extends IService<MMenuEntity> {
      * @return
      */
     Boolean dragsave(List<MMenuDataVo> bean);
+
+    /**
+     * 菜单重定向更新保存
+     * @param bean
+     * @return
+     */
+    InsertOrUpdateResult<MMenuRedirectVo> saveRedirect(MMenuRedirectVo bean);
 }

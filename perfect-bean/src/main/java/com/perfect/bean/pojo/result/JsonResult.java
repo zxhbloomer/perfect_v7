@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class JsonResult<T> implements Serializable {
 
-    private static final long serialVersionUID = -3548881362738874861L;
+    private static final long serialVersionUID = 647057971276510639L;
 
     private String timestamp;
     /** 返回状态: http status */

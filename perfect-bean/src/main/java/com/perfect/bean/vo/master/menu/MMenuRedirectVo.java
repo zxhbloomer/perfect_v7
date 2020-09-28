@@ -44,4 +44,9 @@ public class MMenuRedirectVo implements Serializable {
      * 菜单中，该页面的id
      */
     private Long menu_page_id;
+
+    /**
+     * 页面名称
+     */
+    private String name;
 }

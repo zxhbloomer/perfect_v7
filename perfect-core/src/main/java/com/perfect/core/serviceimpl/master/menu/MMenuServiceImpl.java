@@ -2,10 +2,7 @@ package com.perfect.core.serviceimpl.master.menu;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.perfect.bean.entity.master.menu.MMenuEntity;
-import com.perfect.bean.pojo.result.CheckResult;
-import com.perfect.bean.pojo.result.DeleteResult;
-import com.perfect.bean.pojo.result.InsertResult;
-import com.perfect.bean.pojo.result.UpdateResult;
+import com.perfect.bean.pojo.result.*;
 import com.perfect.bean.result.utils.v1.CheckResultUtil;
 import com.perfect.bean.result.utils.v1.DeleteResultUtil;
 import com.perfect.bean.result.utils.v1.InsertResultUtil;
@@ -14,6 +11,7 @@ import com.perfect.bean.utils.common.tree.TreeUtil;
 import com.perfect.bean.vo.common.component.TreeNode;
 import com.perfect.bean.vo.master.menu.MMenuDataVo;
 import com.perfect.bean.vo.master.menu.MMenuPageFunctionVo;
+import com.perfect.bean.vo.master.menu.MMenuRedirectVo;
 import com.perfect.bean.vo.master.menu.MMenuVo;
 import com.perfect.common.constant.PerfectDictConstant;
 import com.perfect.common.exception.BusinessException;
@@ -563,5 +561,15 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
             }
         }
         return entities;
+    }
+
+    /**
+     * 菜单重定向更新保存
+     * @param bean
+     * @return
+     */
+    @Override
+    public InsertOrUpdateResult<MMenuRedirectVo> saveRedirect(MMenuRedirectVo bean) {
+        return null;
     }
 }
