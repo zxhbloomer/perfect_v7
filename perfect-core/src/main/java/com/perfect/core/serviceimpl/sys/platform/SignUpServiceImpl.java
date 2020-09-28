@@ -12,7 +12,7 @@ import com.perfect.core.mapper.master.user.MStaffMapper;
 import com.perfect.core.mapper.sys.config.tenant.STenantMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.sys.platform.ISignUpService;
-import com.perfect.core.serviceimpl.common.autocode.TenantAutoCodeImpl;
+import com.perfect.core.serviceimpl.common.autocode.TenantAutoCodeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +41,7 @@ public class SignUpServiceImpl extends BaseServiceImpl<MStaffMapper, MStaffEntit
     private STenantMapper sTenantMapper;
 
     @Autowired
-    private TenantAutoCodeImpl tenantAutoCode;
+    private TenantAutoCodeServiceImpl tenantAutoCode;
 
     /**
      * 注册

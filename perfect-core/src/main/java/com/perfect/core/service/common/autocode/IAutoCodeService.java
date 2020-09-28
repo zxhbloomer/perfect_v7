@@ -9,7 +9,7 @@ import com.perfect.bean.entity.sys.platform.syscode.SCodeEntity;
  * @date: 2019/12/13
  * @Version: 1.0
  */
-public interface IAutoCode {
+public interface IAutoCodeService {
 
     SCodeEntity autoCode();
 }

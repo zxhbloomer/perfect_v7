@@ -15,7 +15,7 @@ import com.perfect.common.utils.string.StringUtil;
 import com.perfect.core.mapper.master.org.MDeptMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.master.org.IMDeptService;
-import com.perfect.core.serviceimpl.common.autocode.MDeptAutoCodeImpl;
+import com.perfect.core.serviceimpl.common.autocode.MDeptAutoCodeServiceImpl;
 import com.perfect.core.utils.mybatis.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class MDeptServiceImpl extends BaseServiceImpl<MDeptMapper, MDeptEntity> 
     @Autowired
     private MDeptMapper mapper;
     @Autowired
-    private MDeptAutoCodeImpl autoCode;
+    private MDeptAutoCodeServiceImpl autoCode;
 
     /**
      * 获取列表，页面查询

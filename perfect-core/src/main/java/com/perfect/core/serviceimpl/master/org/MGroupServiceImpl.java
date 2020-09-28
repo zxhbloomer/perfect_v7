@@ -21,7 +21,7 @@ import com.perfect.common.utils.string.StringUtil;
 import com.perfect.core.mapper.master.org.MGroupMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.master.org.IMGroupService;
-import com.perfect.core.serviceimpl.common.autocode.MGroupAutoCodeImpl;
+import com.perfect.core.serviceimpl.common.autocode.MGroupAutoCodeServiceImpl;
 import com.perfect.core.utils.mybatis.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class MGroupServiceImpl extends BaseServiceImpl<MGroupMapper, MGroupEntit
     private MGroupMapper mapper;
 
     @Autowired
-    private MGroupAutoCodeImpl autoCode;
+    private MGroupAutoCodeServiceImpl autoCode;
 
     /**
      * 获取列表，页面查询

@@ -20,7 +20,7 @@ import com.perfect.core.mapper.quartz.SJobMapper;
 import com.perfect.core.mapper.sys.config.tenant.STenantMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.sys.config.tenant.ITenantService;
-import com.perfect.core.serviceimpl.common.autocode.TenantAutoCodeImpl;
+import com.perfect.core.serviceimpl.common.autocode.TenantAutoCodeServiceImpl;
 import com.perfect.core.utils.mybatis.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +47,7 @@ public class STenantServiceImpl extends BaseServiceImpl<STenantMapper, STenantEn
     @Autowired
     private SJobLogMapper jobLogMapper;
     @Autowired
-    private TenantAutoCodeImpl tenantAutoCode;
+    private TenantAutoCodeServiceImpl tenantAutoCode;
 
     /**
      * 获取数据，树结构

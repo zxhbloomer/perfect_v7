@@ -2,6 +2,7 @@ package com.perfect.core.serviceimpl.master.menu;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.perfect.bean.entity.master.menu.MMenuEntity;
+import com.perfect.bean.entity.master.menu.MMenuRedirectEntity;
 import com.perfect.bean.pojo.result.*;
 import com.perfect.bean.result.utils.v1.CheckResultUtil;
 import com.perfect.bean.result.utils.v1.DeleteResultUtil;
@@ -20,9 +21,10 @@ import com.perfect.common.exception.UpdateErrorException;
 import com.perfect.common.utils.bean.BeanUtilsSupport;
 import com.perfect.core.mapper.master.menu.MMenuMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
+import com.perfect.core.service.master.menu.IMMenuRedirectService;
 import com.perfect.core.service.master.menu.IMMenuService;
-import com.perfect.core.serviceimpl.common.autocode.MMenuAutoCodeImpl;
-import com.perfect.core.serviceimpl.common.autocode.MMenuRouteNameAutoCodeImpl;
+import com.perfect.core.serviceimpl.common.autocode.MMenuAutoCodeServiceImpl;
+import com.perfect.core.serviceimpl.common.autocode.MMenuRouteNameAutoCodeServiceImpl;
 import com.perfect.core.utils.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,9 +50,11 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
     @Autowired
     private MMenuMapper mapper;
     @Autowired
-    private MMenuAutoCodeImpl mMenuAutoCode;
+    private IMMenuRedirectService imMenuRedirectService;
     @Autowired
-    private MMenuRouteNameAutoCodeImpl mMenuRouteNameAutoCode;
+    private MMenuAutoCodeServiceImpl mMenuAutoCode;
+    @Autowired
+    private MMenuRouteNameAutoCodeServiceImpl mMenuRouteNameAutoCode;
     @Autowired
     private MMenuServiceImpl self;
 
@@ -570,6 +574,8 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
      */
     @Override
     public InsertOrUpdateResult<MMenuRedirectVo> saveRedirect(MMenuRedirectVo bean) {
+        MMenuRedirectEntity entity = (MMenuRedirectEntity) BeanUtilsSupport.copyProperties(bean, MMenuRedirectEntity.class);
+        imMenuRedirectService.saveOrUpdate(entity);
         return null;
     }
 }

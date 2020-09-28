@@ -3,7 +3,7 @@ package com.perfect.core.serviceimpl.common.autocode;
 import com.perfect.bean.entity.sys.platform.syscode.SCodeEntity;
 import com.perfect.bean.pojo.result.UpdateResult;
 import com.perfect.common.constant.PerfectDictConstant;
-import com.perfect.core.service.common.autocode.IAutoCode;
+import com.perfect.core.service.common.autocode.IAutoCodeService;
 import com.perfect.core.service.sys.platform.syscode.ISCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @Version: 1.0
  */
 @Component
-public class TenantAutoCodeImpl implements IAutoCode {
+public class TenantAutoCodeServiceImpl implements IAutoCodeService {
 
     @Autowired
     ISCodeService service;

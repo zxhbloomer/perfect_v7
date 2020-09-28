@@ -15,7 +15,7 @@ import com.perfect.common.utils.string.StringUtil;
 import com.perfect.core.mapper.master.org.MPositionMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.master.org.IMPositionService;
-import com.perfect.core.serviceimpl.common.autocode.MPositionAutoCodeImpl;
+import com.perfect.core.serviceimpl.common.autocode.MPositionAutoCodeServiceImpl;
 import com.perfect.core.utils.mybatis.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class MPositiionServiceImpl extends BaseServiceImpl<MPositionMapper, MPos
     private MPositionMapper mapper;
 
     @Autowired
-    private MPositionAutoCodeImpl autoCode;
+    private MPositionAutoCodeServiceImpl autoCode;
 
     /**
      * 获取列表，页面查询
