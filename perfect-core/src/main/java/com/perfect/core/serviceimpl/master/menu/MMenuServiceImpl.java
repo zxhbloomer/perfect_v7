@@ -3,11 +3,9 @@ package com.perfect.core.serviceimpl.master.menu;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.perfect.bean.entity.master.menu.MMenuEntity;
 import com.perfect.bean.entity.master.menu.MMenuRedirectEntity;
+import com.perfect.bean.entity.master.org.MOrgEntity;
 import com.perfect.bean.pojo.result.*;
-import com.perfect.bean.result.utils.v1.CheckResultUtil;
-import com.perfect.bean.result.utils.v1.DeleteResultUtil;
-import com.perfect.bean.result.utils.v1.InsertResultUtil;
-import com.perfect.bean.result.utils.v1.UpdateResultUtil;
+import com.perfect.bean.result.utils.v1.*;
 import com.perfect.bean.utils.common.tree.TreeUtil;
 import com.perfect.bean.vo.common.component.TreeNode;
 import com.perfect.bean.vo.master.menu.MMenuDataVo;
@@ -431,6 +429,8 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public DeleteResult<String> realDeleteByCode(MMenuDataVo searchCondition) {
+        // 删除菜单时需要判断是否存在重定向，如果存在，需要先删除重定向数据
+        delRedirect(searchCondition);
         // 删除当前以及子菜单
         mapper.realDeleteByCode(searchCondition);
         return DeleteResultUtil.OK("OK");
@@ -576,6 +576,20 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
     public InsertOrUpdateResult<MMenuRedirectVo> saveRedirect(MMenuRedirectVo bean) {
         MMenuRedirectEntity entity = (MMenuRedirectEntity) BeanUtilsSupport.copyProperties(bean, MMenuRedirectEntity.class);
         imMenuRedirectService.saveOrUpdate(entity);
-        return null;
+        MMenuEntity menuEntity = mapper.selectOne(new QueryWrapper<MMenuEntity>()
+            .eq("id",entity.getMenu_page_id()));
+        bean.setName(menuEntity.getMeta_title());
+        bean.setId(entity.getId());
+        return InsertOrUpdateResultUtil.OK(bean);
+    }
+
+    /**
+     * 菜单重定向删除
+     * @param searchCondition
+     * @return
+     */
+    private DeleteResult<String> delRedirect(MMenuDataVo searchCondition){
+        mapper.delRedirect(searchCondition);
+        return DeleteResultUtil.OK("OK");
     }
 }

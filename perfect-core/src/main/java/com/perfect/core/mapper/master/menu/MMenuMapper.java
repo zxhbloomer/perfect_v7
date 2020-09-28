@@ -227,11 +227,11 @@ public interface MMenuMapper extends BaseMapper<MMenuEntity> {
      * @param searchCondition
      * @return
      */
-    @Select("    "
-        + " delete "
-        + "   from m_menu  "
-        + "  where true "
-        + "    and code like CONCAT (#{p1.code,jdbcType=VARCHAR},'%') "
+    @Delete("                                                             "
+        + " delete                                                        "
+        + "   from m_menu                                                 "
+        + "  where true                                                   "
+        + "    and code like CONCAT (#{p1.code,jdbcType=VARCHAR},'%')     "
         + "      ")
     void realDeleteByCode(@Param("p1") MMenuDataVo searchCondition);
 
@@ -252,4 +252,16 @@ public interface MMenuMapper extends BaseMapper<MMenuEntity> {
         + "                                                                          "
     )
     int updateDragSave(@Param("p1") MMenuEntity entity);
+
+
+    @Delete("                                                                                  "
+        + "  delete from m_menu_redirect t1                                                    "
+        + "   where EXISTS (                                                                   "
+        + "                  select true                                                       "
+        + "                    from m_menu t2                                                  "
+        + "                   where true                                                       "
+        + "                     and t2.code like CONCAT (#{p1.code,jdbcType=VARCHAR},'%')      "
+        + "                     and t1.menu_page_id = t2.id                                    "
+        + "      ")
+    int delRedirect(@Param("p1") MMenuDataVo searchCondition);
 }
