@@ -33,4 +33,9 @@ public class MMenuVo implements Serializable {
      * 按钮清单
      */
     List<MMenuPageFunctionVo> menu_buttons;
+
+    /**
+     * 重定向
+     */
+    MMenuRedirectVo menu_redirect;
 }

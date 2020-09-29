@@ -83,6 +83,10 @@ public class MMenuServiceImpl extends BaseServiceImpl<MMenuMapper, MMenuEntity> 
         mMenuVo.setMenu_data(rtnList);
         mMenuVo.setMenu_buttons(pageFunctionVoList);
 
+        /** 设置重定向bean */
+        MMenuRedirectVo redirectVo = mapper.getRedirectData(searchCondition.getTenant_id());
+        mMenuVo.setMenu_redirect(redirectVo);
+
         return mMenuVo;
     }
 

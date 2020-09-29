@@ -96,17 +96,19 @@ public class MUserPermissionService implements IMUserPermissionService {
      * @return
      */
     private PermissionMenuBo getRedirectBean(Long tenant_id){
-        // TODO:测试代码
-        PermissionMenuBo redirect = new PermissionMenuBo();
-        redirect.setRedirect("/dashboard");
-        redirect.setPath("dashboard");
-        redirect.setComponent("/01_dashboard/index");
-        PermissionMenuMetaBo redirect_meta = new PermissionMenuMetaBo();
-        redirect_meta.setTitle("首页");
-        redirect_meta.setIcon("dashboard");
-        redirect_meta.setAffix(true);
-        redirect_meta.setActive_topnav_index("1");
-        redirect.setMeta(redirect_meta);
+        PermissionMenuBo redirect = mapper.getRedirectData(tenant_id);
+//        // TODO:测试代码
+//        PermissionMenuBo redirect = new PermissionMenuBo();
+//        redirect.setRedirect("/dashboard");
+//        redirect.setPath("dashboard");
+//        redirect.setComponent("/01_dashboard/index");
+//        PermissionMenuMetaBo redirect_meta = new PermissionMenuMetaBo();
+//        redirect_meta.setTitle("首页");
+//        redirect_meta.setIcon("dashboard");
+//        redirect_meta.setAffix(true);
+//        redirect_meta.setActive_topnav_index("1");
+//        redirect.setMeta(redirect_meta);
+        redirect.setRedirect(redirect.getPath());
         return redirect;
     }
 

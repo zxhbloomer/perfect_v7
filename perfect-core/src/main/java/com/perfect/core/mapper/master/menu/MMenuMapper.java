@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.perfect.bean.entity.master.menu.MMenuEntity;
 import com.perfect.bean.vo.master.menu.MMenuDataVo;
 import com.perfect.bean.vo.master.menu.MMenuPageFunctionVo;
+import com.perfect.bean.vo.master.menu.MMenuRedirectVo;
 import com.perfect.bean.vo.master.menu.MMenuVo;
 import com.perfect.common.constant.PerfectDictConstant;
 import org.apache.ibatis.annotations.*;
@@ -253,7 +254,11 @@ public interface MMenuMapper extends BaseMapper<MMenuEntity> {
     )
     int updateDragSave(@Param("p1") MMenuEntity entity);
 
-
+    /**
+     * 删除菜单的同时，需要考虑删除重定向数据
+     * @param searchCondition
+     * @return
+     */
     @Delete("                                                                                  "
         + "  delete from m_menu_redirect t1                                                    "
         + "   where EXISTS (                                                                   "
@@ -264,4 +269,22 @@ public interface MMenuMapper extends BaseMapper<MMenuEntity> {
         + "                     and t1.menu_page_id = t2.id                                    "
         + "      ")
     int delRedirect(@Param("p1") MMenuDataVo searchCondition);
+
+    /**
+     * 获取重定向数据
+     * @param tenant_id
+     * @return
+     */
+    @Select("                                                                                 "
+        + "          SELECT t1.id,                                                            "
+        + "                 t1.root_id,                                                       "
+        + "                 t1.page_id,                                                       "
+        + "                 t1.menu_page_id,                                                  "
+        + "                 t2.meta_title as name                                             "
+        + "            FROM m_menu_redirect AS t1                                             "
+        + "      INNER JOIN m_menu t2 ON t1.menu_page_id = t2.id                              "
+        + "             and t2.tenant_id = #{p1}                                       "
+        + "                                                                                   "
+        + "      ")
+    MMenuRedirectVo getRedirectData(@Param("p1") Long tenant_id);
 }

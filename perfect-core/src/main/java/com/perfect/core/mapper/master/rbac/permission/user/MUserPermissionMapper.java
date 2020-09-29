@@ -125,6 +125,12 @@ public interface MUserPermissionMapper {
     })
     List<PermissionTopNavDetailBo> getTopNav(@Param("p1")Long tenant_id);
 
+    /**
+     * 获取系统菜单
+     * @param tenant_id
+     * @param top_nav_code
+     * @return
+     */
     @Select("                                                                                                        "
         + "                    WITH recursive tab1 AS (                                                              "
         + "                        SELECT                                                                            "
@@ -237,7 +243,12 @@ public interface MUserPermissionMapper {
     })
     List<PermissionMenuBo> getPermissionMenu(@Param("p1") Long staff_id,@Param("p2")Long tenant_id, @Param("p3") String top_nav_code);
 
-
+    /**
+     * 获取权限操作数据
+     * @param staff_id
+     * @param tenant_id
+     * @return
+     */
     @Select("                                     "
         + "       SELECT t3.*                                                               "
         + "         FROM m_staff t1                                                         "
@@ -248,5 +259,24 @@ public interface MUserPermissionMapper {
         + "        WHERE t1.id = #{p1}                                                      "
         + "          and ( t1.tenant_id = #{p2} or #{p2} is null )                          "
         + "                ")
-    List<PermissionOperationBo> getPermissionOperation(@Param("p1") Long staff_id,@Param("p2")Long tenant_id);
+    List<PermissionOperationBo> getPermissionOperation(@Param("p1") Long staff_id, @Param("p2")Long tenant_id);
+
+    /**
+     * 获取redirect数据
+     * @param tenant_id
+     * @return
+     */
+    @Select("                                                                                 "
+        + "          select t1.*,"
+        + "    JSON_OBJECT('title',t1.meta_title,'icon',t1.meta_icon,'affix',t1.affix,'name',t1.meta_title) as meta     "
+        + "            from m_menu as t1,                                                     "
+        + "                 m_menu_redirect as t2                                             "
+        + "           where t2.menu_page_id = t1.id                                           "
+        + "             and t1.tenant_id = #{p1}                                              "
+        + "                                                                                   "
+        + "      ")
+    @Results({
+        @Result(property = "meta", column = "meta", javaType = PermissionMenuMetaBo.class, typeHandler = com.perfect.core.config.mybatis.typehandlers.PermissionMenuMetaBoTypeHandler.class),
+    })
+    PermissionMenuBo getRedirectData(@Param("p1")Long tenant_id);
 }
