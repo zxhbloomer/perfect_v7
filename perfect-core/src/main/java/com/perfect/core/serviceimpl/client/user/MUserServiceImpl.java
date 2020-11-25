@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -70,7 +71,8 @@ public class MUserServiceImpl extends BaseServiceImpl<MUserMapper, MUserEntity> 
         //        List<Role> roles = userMapper.selectRoles(user.getId());
         //
         List<String> permissions = new ArrayList<>();
-        permissions.addAll(CollectionUtils.arrayToList(new String[]{"ROLE_USER"}));
+//        permissions.addAll(CollectionUtils.arrayToList(new String[]{"ROLE_USER"}));
+        permissions.addAll(Arrays.asList(new String[]{"ROLE_USER"}));
         //        for (Role role : roles) {
         //            permissions.addAll(CollectionUtils.arrayToList(role.getPermissions()));
         //        }
