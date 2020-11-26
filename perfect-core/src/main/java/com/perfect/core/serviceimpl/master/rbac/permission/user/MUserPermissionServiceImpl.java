@@ -13,7 +13,6 @@ import com.perfect.core.mapper.master.rbac.permission.user.MUserPermissionMapper
 import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -29,7 +28,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class MUserPermissionService implements IMUserPermissionService {
+public class MUserPermissionServiceImpl implements IMUserPermissionService {
 
     @Autowired
     private MUserPermissionMapper mapper;
