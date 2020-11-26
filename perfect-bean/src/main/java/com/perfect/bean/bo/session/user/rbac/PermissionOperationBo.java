@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @NoArgsConstructor
-@ApiModel(value = "权限页面操作表", description = "权限页面操作表")
+@ApiModel(value = "权限页面操作表", description = "权限页面操作表 ")
 @EqualsAndHashCode(callSuper=false)
 public class PermissionOperationBo implements Serializable {
 
