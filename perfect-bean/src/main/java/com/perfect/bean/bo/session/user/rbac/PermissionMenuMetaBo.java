@@ -61,4 +61,9 @@ public class PermissionMenuMetaBo implements Serializable {
      * 高亮topnav的index
      */
     private String active_topnav_index;
+
+    /**
+     * page_code
+     */
+    private String page_code;
 }

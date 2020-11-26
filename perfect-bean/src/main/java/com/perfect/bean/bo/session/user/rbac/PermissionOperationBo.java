@@ -88,4 +88,14 @@ public class PermissionOperationBo implements Serializable {
      * 数据版本，乐观锁使用
      */
     private Integer dbversion;
+
+    /**
+     * 操作权限
+     */
+    private String operation_perms;
+
+    /**
+     * 操作权限说明
+     */
+    private String operation_descr;
 }

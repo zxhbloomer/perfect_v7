@@ -41,6 +41,7 @@ public interface MUserPermissionMapper {
         + "                           'icon',t1.meta_icon,                                                           "
         + "                           'affix',t1.affix,                                                              "
         + "                           'name',t1.meta_title,                                                          "
+        + "                           'page_code',t1.page_code,                                                      "
         + "                           'active_topnav_index', t3.index) as meta                                       "
         + "          FROM m_menu t1                                                                                  "
         + "            left join (                                                                                   "
@@ -85,7 +86,9 @@ public interface MUserPermissionMapper {
         + "          select t1.*,                                                                "
         + "                 CONCAT(@rownum := @rownum +1,'') AS `index`,                         "
         + "                 t2.code active_code,                                                 "
-        + "  JSON_OBJECT('title',t1.meta_title,'icon',t1.meta_icon,'name',t1.meta_title) as meta "
+        + "                 JSON_OBJECT('title',t1.meta_title,                                   "
+        + "                             'icon',t1.meta_icon,                                     "
+        + "                             'name',t1.meta_title) as meta                            "
         + "            from m_menu t1                                                            "
         + "       left join (                                                                    "
         + "                   select left( code, 8 ) code,                                       "
@@ -113,7 +116,9 @@ public interface MUserPermissionMapper {
     @Select("                                                                                    "
         + "          select t1.*,                                                                "
         + "                 CONCAT(@rownum := @rownum +1,'') AS `index`,                         "
-        + "  JSON_OBJECT('title',t1.meta_title,'icon',t1.meta_icon,'name',t1.meta_title) as meta "
+        + "                 JSON_OBJECT('title',t1.meta_title,                                   "
+        + "                             'icon',t1.meta_icon,                                     "
+        + "                             'name',t1.meta_title) as meta                            "
         + "            from m_menu t1,                                                           "
         + "                 (SELECT @rownum := 0) t3                                             "
         + "           where t1.type = '"+ PerfectDictConstant.DICT_SYS_MENU_TYPE_TOPNAV +"'      "
@@ -219,7 +224,11 @@ public interface MUserPermissionMapper {
         + "                	   t2.meta_icon,                                                                             "
         + "                	   t2.component,                                                                             "
         + "                	   t2.affix,                                                                                 "
-        + "    JSON_OBJECT('title',t2.meta_title,'icon',t2.meta_icon,'affix',t2.affix,'name',t2.meta_title) as meta,     "
+        + "                    JSON_OBJECT('title',t2.meta_title,                                                        "
+        + "                              'icon',t2.meta_icon,                                                            "
+        + "                              'affix',t2.affix,                                                               "
+        + "                              'name',t2.meta_title,                                                           "
+        + "                              'page_code',t2.page_code) as meta,                                              "
         + "                	   t2.tenant_id                                                                              "
         + "               FROM                                                                                           "
         + "                	   v_permission_tree t1                                                                      "
@@ -250,15 +259,19 @@ public interface MUserPermissionMapper {
      * @return
      */
     @Select("                                     "
-        + "       SELECT t3.*                                                               "
+        + "       SELECT t3.*,                                                              "
+        + "              t4.perms operation_perms,                                          "
+        + "              t4.descr operation_descr                                           "
         + "         FROM m_staff t1                                                         "
         + "   INNER JOIN m_permission t2 ON t2.serial_type = '" + PerfectDictConstant.DICT_ORG_SETTING_TYPE_DEPT_SERIAL_TYPE + "' "
         + "       	 AND t2.serial_id = t1.dept_id                                          "
         + "       	 AND t2.`status` = TRUE                                                 "
         + "   INNER JOIN m_permission_pages t3 on t3.permission_id = t2.id                  "
+        + "   INNER JOIN m_permission_operation t4 ON t4.page_id = t3.page_id               "
+        + "          AND t4.permission_id = t3.permission_id                                "
         + "        WHERE t1.id = #{p1}                                                      "
         + "          and ( t1.tenant_id = #{p2} or #{p2} is null )                          "
-        + "                ")
+        + "                                                                                 ")
     List<PermissionOperationBo> getPermissionOperation(@Param("p1") Long staff_id, @Param("p2")Long tenant_id);
 
     /**
@@ -267,8 +280,11 @@ public interface MUserPermissionMapper {
      * @return
      */
     @Select("                                                                                 "
-        + "          select t1.*,"
-        + "    JSON_OBJECT('title',t1.meta_title,'icon',t1.meta_icon,'affix',t1.affix,'name',t1.meta_title) as meta     "
+        + "          select t1.*,                                                             "
+        + "                 JSON_OBJECT('title',t1.meta_title,                                "
+        + "                           'icon',t1.meta_icon,                                    "
+        + "                           'affix',t1.affix,                                       "
+        + "                           'name',t1.meta_title) as meta                           "
         + "            from m_menu as t1,                                                     "
         + "                 m_menu_redirect as t2                                             "
         + "           where t2.menu_page_id = t1.id                                           "
