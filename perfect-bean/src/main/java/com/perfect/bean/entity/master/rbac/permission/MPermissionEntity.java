@@ -52,7 +52,7 @@ public class MPermissionEntity implements Serializable {
     private String name;
 
     /**
-     * 关联单号
+     * 关联菜单id
      */
     @TableField("menu_id")
     private Long menu_id;
