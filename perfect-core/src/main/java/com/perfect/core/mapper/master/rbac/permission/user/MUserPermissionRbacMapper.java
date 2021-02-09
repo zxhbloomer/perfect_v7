@@ -21,7 +21,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Repository
-public interface MUserPermissionMapper {
+public interface MUserPermissionRbacMapper {
 
     /**
      * 获取所有路由数据

@@ -9,8 +9,8 @@ import com.perfect.bean.entity.master.menu.MMenuEntity;
 import com.perfect.bean.utils.common.tree.TreeUtil;
 import com.perfect.common.constant.PerfectConstant;
 import com.perfect.core.mapper.master.menu.MMenuMapper;
-import com.perfect.core.mapper.master.rbac.permission.user.MUserPermissionMapper;
-import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionService;
+import com.perfect.core.mapper.master.rbac.permission.user.MUserPermissionRbacMapper;
+import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionRbacService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,10 +28,10 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class MUserPermissionServiceImpl implements IMUserPermissionService {
+public class MUserPermissionRbacServiceImpl implements IMUserPermissionRbacService {
 
     @Autowired
-    private MUserPermissionMapper mapper;
+    private MUserPermissionRbacMapper mapper;
 
     @Autowired
     private MMenuMapper mMenuMapper;

@@ -13,7 +13,7 @@ import java.util.List;
  * @date: 2020/8/26
  * @Version: 1.0
  */
-public interface IMUserPermissionService  {
+public interface IMUserPermissionRbacService {
 
     /**
      * 菜单权限数据，顶部导航栏

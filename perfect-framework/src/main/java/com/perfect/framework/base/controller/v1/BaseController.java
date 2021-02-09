@@ -12,7 +12,7 @@ import com.perfect.common.exception.BusinessException;
 import com.perfect.common.properies.PerfectConfigProperies;
 import com.perfect.common.utils.bean.BeanUtilsSupport;
 import com.perfect.core.service.client.user.IMUserService;
-import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionService;
+import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionRbacService;
 import com.perfect.excel.bean.importconfig.template.ExcelTemplate;
 import com.perfect.excel.export.ExcelUtil;
 import com.perfect.excel.upload.PerfectExcelReader;
@@ -56,7 +56,7 @@ public class BaseController {
     private IMUserService service;
 
     @Autowired
-    private IMUserPermissionService imUserPermissionService;
+    private IMUserPermissionRbacService imUserPermissionRbacService;
 
     /** 开发者模式，可以跳过验证码 */
     @Value("${perfect.security.develop-model}")

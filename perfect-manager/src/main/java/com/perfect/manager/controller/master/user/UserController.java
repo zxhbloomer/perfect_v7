@@ -2,8 +2,6 @@ package com.perfect.manager.controller.master.user;
 
 import com.perfect.bean.bo.session.user.UserSessionBo;
 import com.perfect.bean.bo.session.user.rbac.PermissionAndTopNavBo;
-import com.perfect.bean.bo.session.user.rbac.PermissionMenuBo;
-import com.perfect.bean.bo.session.user.rbac.PermissionOperationBo;
 import com.perfect.bean.entity.master.user.MUserEntity;
 import com.perfect.bean.pojo.result.JsonResult;
 import com.perfect.bean.result.utils.v1.ResultUtil;
@@ -18,7 +16,7 @@ import com.perfect.common.exception.PasswordException;
 import com.perfect.common.exception.UpdateErrorException;
 import com.perfect.common.utils.string.StringUtil;
 import com.perfect.core.service.client.user.IMUserService;
-import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionService;
+import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionRbacService;
 import com.perfect.framework.base.controller.v1.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * @author zxh
@@ -44,7 +41,7 @@ public class UserController extends BaseController {
     private IMUserService service;
 
     @Autowired
-    private IMUserPermissionService imUserPermissionService;
+    private IMUserPermissionRbacService imUserPermissionRbacService;
 
     @SysLogAnnotion("获取用户信息")
     @ApiOperation("获取用户信息")
@@ -128,7 +125,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResponseEntity<JsonResult<PermissionAndTopNavBo>> getPermissionAndSetTopNavAction(@RequestParam("pathOrIndex") String pathOrIndex, @RequestParam("type") String type) {
         UserSessionBo bo = getUserSession();
-        PermissionAndTopNavBo user_permission_menu_topNav = imUserPermissionService.getPermissionMenuTopNav(getUserSession().getTenant_Id(), pathOrIndex, type, bo.getStaff_Id());
+        PermissionAndTopNavBo user_permission_menu_topNav = imUserPermissionRbacService.getPermissionMenuTopNav(getUserSession().getTenant_Id(), pathOrIndex, type, bo.getStaff_Id());
         return ResponseEntity.ok().body(ResultUtil.OK(user_permission_menu_topNav));
     }
 
