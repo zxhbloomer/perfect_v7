@@ -2,6 +2,7 @@ package com.perfect.core.service.client.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfect.bean.entity.master.user.MUserLiteEntity;
+import com.perfect.bean.vo.master.user.MUserLiteVo;
 
 /**
  * <p>
@@ -12,5 +13,13 @@ import com.perfect.bean.entity.master.user.MUserLiteEntity;
  * @since 2019-07-13
  */
 public interface IMUserLiteService extends IService<MUserLiteEntity> {
+
+    /**
+     * 重建用户简单
+     *
+     * @param user_id
+     * @return
+     */
+    MUserLiteVo reBulidUserLite(Long user_id);
 
 }
