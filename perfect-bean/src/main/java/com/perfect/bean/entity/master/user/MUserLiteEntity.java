@@ -19,21 +19,61 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("m_user_lite")
-public class MUserLiteEntity extends BaseEntity<MUserLiteEntity> implements Serializable {
+public class MUserLiteEntity implements Serializable {
 
-    private static final long serialVersionUID = -3245496064225940524L;
+    private static final long serialVersionUID = 1898364708866632626L;
+
     /**
      * 主键
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @TableField("login_name")
-    private String loginName;
+    /**
+     * m_user的主键
+     */
+    @TableField("user_id")
+    private Long user_id;
 
+    /**
+     * m_staff的主键
+     */
+    @TableField("staff_id")
+    private Long staff_id;
+
+    /**
+     * 登录模式：（10：手机号码；20：邮箱）
+     */
+    @TableField("login_type")
+    private String login_type;
+
+    /**
+     * 登陆用户名
+     */
+    @TableField("login_name")
+    private String login_name;
+
+    /**
+     * 密码
+     */
+    @TableField("pwd")
+    private String pwd;
+
+    /**
+     * 头像
+     */
+    @TableField("avatar")
+    private String avatar;
+
+    /**
+     * 姓名
+     */
     @TableField("name")
     private String name;
 
+    /**
+     * 简称
+     */
     @TableField("simple_name")
     private String simple_name;
 
@@ -44,43 +84,22 @@ public class MUserLiteEntity extends BaseEntity<MUserLiteEntity> implements Seri
     private String type;
 
     /**
-     * 说明
+     * 租户id
      */
-    @TableField("descr")
-    private String descr;
+    @TableField("tenant_id")
+    private Long tenant_id;
 
     /**
-     * 密码
-
+     * 所属公司
      */
-    @TableField("pwd")
-    private String pwd;
+    @TableField("company_id")
+    private Long company_id;
 
     /**
-     * 租户代码
+     * 默认部门
      */
-    @TableField("corp_code")
-    private String corp_code;
+    @TableField("dept_id")
+    private Long dept_id;
 
-    /**
-     * 租户名称
-     */
-    @TableField("corp_name")
-    private String corp_name;
-
-    @TableField("avatar")
-    private String avatar;
-
-    @TableField(value="c_id", fill = FieldFill.INSERT, updateStrategy = FieldStrategy.NOT_EMPTY)
-    private Long c_id;
-
-    @TableField(value="c_time", fill = FieldFill.INSERT, updateStrategy = FieldStrategy.NOT_EMPTY)
-    private LocalDateTime c_time;
-
-    @TableField(value="u_id", fill = FieldFill.INSERT_UPDATE)
-    private Long u_id;
-
-    @TableField(value="u_time", fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime u_time;
 
 }
