@@ -87,5 +87,8 @@ public class MUserLiteVo implements Serializable {
      */
     private Long dept_id;
 
-
+    /**
+     * 菜单id，基本为m_permission_menu.permission_id，需要考虑自定义菜单情况
+     */
+    private Long menu_id;
 }
