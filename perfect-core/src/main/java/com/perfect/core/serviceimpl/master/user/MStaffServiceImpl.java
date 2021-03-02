@@ -26,6 +26,7 @@ import com.perfect.core.mapper.client.user.MUserMapper;
 import com.perfect.core.mapper.master.org.MStaffOrgMapper;
 import com.perfect.core.mapper.master.user.MStaffMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
+import com.perfect.core.service.client.user.IMUserLiteService;
 import com.perfect.core.service.master.user.IMStaffService;
 import com.perfect.core.utils.mybatis.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,9 @@ public class MStaffServiceImpl extends BaseServiceImpl<MStaffMapper, MStaffEntit
 
     @Autowired
     private MStaffOrgMapper mStaffOrgMapper;
+
+    @Autowired
+    private IMUserLiteService imUserLiteService;
 
     /**
      * 获取列表，页面查询
@@ -191,9 +195,11 @@ public class MStaffServiceImpl extends BaseServiceImpl<MStaffMapper, MStaffEntit
         mUserEntity.setTenant_id(getUserSessionTenantId());
         mUserMapper.updateById(mUserEntity);
 
-
         // 判断企业、部门字段，对用户组织关系表进行更新
         updateStaffOrg(mStaffEntity);
+
+        // 用户简单重构
+        imUserLiteService.reBulidUserLite(mUserEntity.getId());
 
         // 返回值确定
         vo.setId(mStaffEntity.getId());
@@ -285,9 +291,11 @@ public class MStaffServiceImpl extends BaseServiceImpl<MStaffMapper, MStaffEntit
         // 判断企业、部门字段，对用户组织关系表进行更新
         updateStaffOrg(mStaffEntity);
 
-
         // 设置返回值
         vo.setId(mStaffEntity.getId());
+
+        // 用户简单重构
+        imUserLiteService.reBulidUserLite(mUserEntity.getId());
 
         // 更新逻辑保存
         return UpdateResultUtil.OK(1);

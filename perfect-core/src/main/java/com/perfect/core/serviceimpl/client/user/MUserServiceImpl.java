@@ -17,6 +17,7 @@ import com.perfect.common.constant.PerfectConstant;
 import com.perfect.common.exception.BusinessException;
 import com.perfect.core.mapper.client.user.MUserMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
+import com.perfect.core.service.client.user.IMUserLiteService;
 import com.perfect.core.service.client.user.IMUserService;
 import com.perfect.core.service.master.user.IMStaffService;
 import com.perfect.core.service.sys.config.tenant.ITenantService;
@@ -27,7 +28,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +53,9 @@ public class MUserServiceImpl extends BaseServiceImpl<MUserMapper, MUserEntity> 
 
     @Autowired
     private ITenantService iTenantService;
+
+    @Autowired
+    private IMUserLiteService imUserLiteService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -155,7 +158,14 @@ public class MUserServiceImpl extends BaseServiceImpl<MUserMapper, MUserEntity> 
         }
         // 插入逻辑保存
         entity.setIs_del(false);
-        return InsertResultUtil.OK(mUserMapper.insert(entity));
+
+        // 执行插入
+        int rtn = mUserMapper.insert(entity);
+
+        // 用户简单重构
+        imUserLiteService.reBulidUserLite(entity.getId());
+
+        return InsertResultUtil.OK(rtn);
     }
 
     /**
@@ -174,7 +184,14 @@ public class MUserServiceImpl extends BaseServiceImpl<MUserMapper, MUserEntity> 
         // 更新逻辑保存
         entity.setC_id(null);
         entity.setC_time(null);
-        return UpdateResultUtil.OK(mUserMapper.updateById(entity));
+
+        // 执行更新操作
+        int rtn = mUserMapper.updateById(entity);
+
+        // 用户简单重构
+        imUserLiteService.reBulidUserLite(entity.getId());
+
+        return UpdateResultUtil.OK(rtn);
     }
 
     /**

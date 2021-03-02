@@ -1,7 +1,6 @@
 package com.perfect.core.serviceimpl.client.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.google.common.collect.Lists;
 import com.perfect.bean.entity.master.user.MStaffEntity;
 import com.perfect.bean.entity.master.user.MUserEntity;
 import com.perfect.bean.entity.master.user.MUserLiteEntity;
@@ -14,8 +13,7 @@ import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.client.user.IMUserLiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -41,9 +39,10 @@ public class MUserLiteServiceImpl extends BaseServiceImpl<MUserLiteMapper, MUser
      * @param user_id
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public MUserLiteVo reBulidUserLite(Long user_id) {
-        // 1： 删除m_user_lite的user_id = xx
+        // 1： 删除m_user_lite的user_id = user_id
         mapper.delete(new QueryWrapper<MUserLiteEntity>()
                 .eq("user_id",user_id)
         );
@@ -57,17 +56,18 @@ public class MUserLiteServiceImpl extends BaseServiceImpl<MUserLiteMapper, MUser
         // 4:设置数据
         MUserLiteEntity userLiteEntity = new MUserLiteEntity();
         userLiteEntity.setUser_id(mUserEntity.getId());
-        userLiteEntity.setStaff_id(mStaffEntity.getId());
         userLiteEntity.setLogin_type(mUserEntity.getLogin_type());
         userLiteEntity.setLogin_name(mUserEntity.getLogin_name());
         userLiteEntity.setAvatar(mUserEntity.getAvatar());
-        userLiteEntity.setName(mStaffEntity.getName());
-        userLiteEntity.setSimple_name(mStaffEntity.getSimple_name());
         userLiteEntity.setType(mUserEntity.getType());
         userLiteEntity.setTenant_id(mUserEntity.getTenant_id());
-        userLiteEntity.setCompany_id(mStaffEntity.getCompany_id());
-        userLiteEntity.setDept_id(mStaffEntity.getDept_id());
-
+        if(mStaffEntity !=null) {
+            userLiteEntity.setStaff_id(mStaffEntity.getId());
+            userLiteEntity.setName(mStaffEntity.getName());
+            userLiteEntity.setSimple_name(mStaffEntity.getSimple_name());
+            userLiteEntity.setCompany_id(mStaffEntity.getCompany_id());
+            userLiteEntity.setDept_id(mStaffEntity.getDept_id());
+        }
         mapper.insert(userLiteEntity);
         MUserLiteVo rtnBean = new MUserLiteVo();
         BeanUtilsSupport.copyProperties(userLiteEntity, rtnBean);
