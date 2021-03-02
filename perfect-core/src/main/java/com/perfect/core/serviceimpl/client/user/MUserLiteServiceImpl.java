@@ -1,6 +1,7 @@
 package com.perfect.core.serviceimpl.client.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.perfect.bean.entity.master.menu.MMenuEntity;
 import com.perfect.bean.entity.master.user.MStaffEntity;
 import com.perfect.bean.entity.master.user.MUserEntity;
 import com.perfect.bean.entity.master.user.MUserLiteEntity;
@@ -72,5 +73,22 @@ public class MUserLiteServiceImpl extends BaseServiceImpl<MUserLiteMapper, MUser
         MUserLiteVo rtnBean = new MUserLiteVo();
         BeanUtilsSupport.copyProperties(userLiteEntity, rtnBean);
         return rtnBean;
+    }
+
+    /**
+     * 更细用户默认菜单
+     *
+     * @param user_id
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public MUserLiteVo updDefaultMenu(Long user_id) {
+
+        // （部门权限+ 岗位权限+ 员工权限+ 角色权限）- 排除权限
+        // 获取部门
+        MUserLiteEntity mUserLiteEntity = mapper.selectOne(new QueryWrapper<MUserLiteEntity>()
+                                                            .eq("user_id",user_id));
+        return null;
     }
 }

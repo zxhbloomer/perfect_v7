@@ -22,4 +22,12 @@ public interface IMUserLiteService extends IService<MUserLiteEntity> {
      */
     MUserLiteVo reBulidUserLite(Long user_id);
 
+    /**
+     * 更细用户默认菜单
+     *
+     * @param user_id
+     * @return
+     */
+    MUserLiteVo updDefaultMenu(Long user_id);
+
 }
