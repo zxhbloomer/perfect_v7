@@ -89,6 +89,7 @@ public class MUserLiteServiceImpl extends BaseServiceImpl<MUserLiteMapper, MUser
         // 获取部门
         MUserLiteEntity mUserLiteEntity = mapper.selectOne(new QueryWrapper<MUserLiteEntity>()
                                                             .eq("user_id",user_id));
+
         return null;
     }
 }
