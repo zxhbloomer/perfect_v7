@@ -2,6 +2,8 @@ package com.perfect.core.serviceimpl.master.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.perfect.bean.entity.master.rbac.permission.MPermissionEntity;
+import com.perfect.bean.entity.master.user.MUserLiteEntity;
 import com.perfect.bean.entity.master.user.MUserPermissionEntity;
 import com.perfect.core.mapper.master.user.MUserPermissionMapper;
 import com.perfect.core.service.master.user.IMUserPermissionService;
@@ -35,8 +37,10 @@ public class MUserPermissionServiceImpl extends ServiceImpl<MUserPermissionMappe
         mapper.delete(new QueryWrapper<MUserPermissionEntity>()
                 .eq("user_id",user_id)
         );
-        // 2：重构数据
-
+        // 2：重构数据： （部门权限+ 岗位权限+ 员工权限+ 角色权限）- 排除权限
+        // 部门权限
+//        MPermissionEntity mPermissionEntity = mapper.selectOne(new QueryWrapper<MPermissionEntity>()
+//                .eq("user_id",user_id));
         return null;
     }
 }

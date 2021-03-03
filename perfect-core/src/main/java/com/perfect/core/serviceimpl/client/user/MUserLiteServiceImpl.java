@@ -84,8 +84,7 @@ public class MUserLiteServiceImpl extends BaseServiceImpl<MUserLiteMapper, MUser
     @Transactional(rollbackFor = Exception.class)
     @Override
     public MUserLiteVo updDefaultMenu(Long user_id) {
-
-        // （部门权限+ 岗位权限+ 员工权限+ 角色权限）- 排除权限
+        
         // 获取部门
         MUserLiteEntity mUserLiteEntity = mapper.selectOne(new QueryWrapper<MUserLiteEntity>()
                                                             .eq("user_id",user_id));
