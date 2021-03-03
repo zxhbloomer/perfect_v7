@@ -22,5 +22,5 @@ public interface IMUserPermissionService extends IService<MUserPermissionEntity>
      * @param user_id
      * @return
      */
-    List<MUserPermissionEntity> resetUserPermission(Long user_id);
+    List<MUserPermissionEntity> reBuildUserPermissionData(Long user_id);
 }

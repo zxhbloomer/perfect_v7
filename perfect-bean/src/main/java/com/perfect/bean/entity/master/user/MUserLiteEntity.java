@@ -95,10 +95,4 @@ public class MUserLiteEntity implements Serializable {
     @TableField("dept_id")
     private Long dept_id;
 
-    /**
-     * 菜单id，基本为m_permission_menu.permission_id，需要考虑自定义菜单情况
-     */
-    @TableField("menu_id")
-    private Long menu_id;
-
 }

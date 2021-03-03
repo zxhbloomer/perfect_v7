@@ -42,7 +42,7 @@ public class MUserLiteServiceImpl extends BaseServiceImpl<MUserLiteMapper, MUser
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public MUserLiteVo reBulidUserLite(Long user_id) {
+    public MUserLiteVo reBulidUserLiteData(Long user_id) {
         // 1： 删除m_user_lite的user_id = user_id
         mapper.delete(new QueryWrapper<MUserLiteEntity>()
                 .eq("user_id",user_id)

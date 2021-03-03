@@ -199,7 +199,7 @@ public class MStaffServiceImpl extends BaseServiceImpl<MStaffMapper, MStaffEntit
         updateStaffOrg(mStaffEntity);
 
         // 用户简单重构
-        imUserLiteService.reBulidUserLite(mUserEntity.getId());
+        imUserLiteService.reBulidUserLiteData(mUserEntity.getId());
 
         // 返回值确定
         vo.setId(mStaffEntity.getId());
@@ -295,7 +295,7 @@ public class MStaffServiceImpl extends BaseServiceImpl<MStaffMapper, MStaffEntit
         vo.setId(mStaffEntity.getId());
 
         // 用户简单重构
-        imUserLiteService.reBulidUserLite(mUserEntity.getId());
+        imUserLiteService.reBulidUserLiteData(mUserEntity.getId());
 
         // 更新逻辑保存
         return UpdateResultUtil.OK(1);

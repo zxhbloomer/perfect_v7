@@ -20,7 +20,7 @@ public interface IMUserLiteService extends IService<MUserLiteEntity> {
      * @param user_id
      * @return
      */
-    MUserLiteVo reBulidUserLite(Long user_id);
+    MUserLiteVo reBulidUserLiteData(Long user_id);
 
     /**
      * 更细用户默认菜单

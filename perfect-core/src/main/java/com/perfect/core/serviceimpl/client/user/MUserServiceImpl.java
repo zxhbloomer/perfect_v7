@@ -163,7 +163,7 @@ public class MUserServiceImpl extends BaseServiceImpl<MUserMapper, MUserEntity> 
         int rtn = mUserMapper.insert(entity);
 
         // 用户简单重构
-        imUserLiteService.reBulidUserLite(entity.getId());
+        imUserLiteService.reBulidUserLiteData(entity.getId());
 
         return InsertResultUtil.OK(rtn);
     }
@@ -189,7 +189,7 @@ public class MUserServiceImpl extends BaseServiceImpl<MUserMapper, MUserEntity> 
         int rtn = mUserMapper.updateById(entity);
 
         // 用户简单重构
-        imUserLiteService.reBulidUserLite(entity.getId());
+        imUserLiteService.reBulidUserLiteData(entity.getId());
 
         return UpdateResultUtil.OK(rtn);
     }
