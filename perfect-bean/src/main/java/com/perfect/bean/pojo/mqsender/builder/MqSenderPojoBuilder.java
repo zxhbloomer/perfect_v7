@@ -19,7 +19,9 @@ public class MqSenderPojoBuilder {
 
     /**
      * 构筑mq的bean
-     * @param messageData
+     * @param messageData    消息数据
+     * @param mqSenderEnum   消息code，消息名称
+     * @param job_name       任务名称
      * @return
      */
     public static MqSenderPojo buildMqSenderPojo(Object messageData, MqSenderEnum mqSenderEnum, String job_name){

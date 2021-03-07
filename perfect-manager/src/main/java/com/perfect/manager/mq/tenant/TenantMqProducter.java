@@ -36,7 +36,7 @@ public class TenantMqProducter {
      * 调用消息队列，消息队列调用定时任务
      */
     @Autowired
-    private PerfectMqProducer mqproducer;
+    private PerfectMqProducer mqProducer;
 
     /**
      * 保存完毕后，调用mq，触发定时任务
@@ -61,17 +61,17 @@ public class TenantMqProducter {
         SJobEntity enableBean = TenantTaskBuilder.builderEnableBean(data, enableJobEntity);
         // 初始化要发生mq的bean
         MqSenderPojo
-            enableMqSenderPojo = MqSenderPojoBuilder.buildMqSenderPojo(enableBean, MqSenderEnum.NORMAL_MQ, QuartzEnum.TASK_TENANT_ENABLE.getJob_name());
+            enableMqSenderPojo = MqSenderPojoBuilder.buildMqSenderPojo(enableBean, MqSenderEnum.MQ_TENANT_ENABLE, QuartzEnum.TASK_TENANT_ENABLE.getJob_name());
         // 启动一个开始的任务
-        mqproducer.send(enableMqSenderPojo, MQEnum.MQ_TASK_Tenant_ENABLE);
+        mqProducer.send(enableMqSenderPojo, MQEnum.MQ_TASK_Tenant_ENABLE);
 
         // 禁用的task
         SJobEntity disableJobEntity = jobService.selectJobBySerialId(data.getId(), QuartzEnum.TASK_TENANT_DISABLE.getJob_serial_type());
         SJobEntity disableBean = TenantTaskBuilder.builderDisableBean(data, disableJobEntity);
         // 初始化要发生mq的bean
-        MqSenderPojo disableMqSenderPojo = MqSenderPojoBuilder.buildMqSenderPojo(disableBean, MqSenderEnum.NORMAL_MQ, QuartzEnum.TASK_TENANT_DISABLE.getJob_name());
+        MqSenderPojo disableMqSenderPojo = MqSenderPojoBuilder.buildMqSenderPojo(disableBean, MqSenderEnum.MQ_TENANT_DISABLE, QuartzEnum.TASK_TENANT_DISABLE.getJob_name());
         // 启动一个结束的任务
-        mqproducer.send(disableMqSenderPojo, MQEnum.MQ_TASK_Tenant_Disable);
+        mqProducer.send(disableMqSenderPojo, MQEnum.MQ_TASK_Tenant_Disable);
     }
 
     private void resetAllMq(List<STenantVo> dataList){

@@ -115,6 +115,12 @@ public class PerfectMqProducer implements RabbitTemplate.ConfirmCallback, Rabbit
         service.insert(sLogMqEntity);
     }
 
+    /**
+     * 回调函数: confirm确认
+     * @param correlationData
+     * @param ack
+     * @param cause
+     */
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
         String jsonString = correlationData.getId();
@@ -135,6 +141,14 @@ public class PerfectMqProducer implements RabbitTemplate.ConfirmCallback, Rabbit
         }
     }
 
+    /**
+     * 回调函数: return返回
+     * @param message
+     * @param replyCode
+     * @param replyText
+     * @param exchange
+     * @param routingKey
+     */
     @Override
     public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
         String messageData = Convert.str(message.getBody(), (Charset)null);

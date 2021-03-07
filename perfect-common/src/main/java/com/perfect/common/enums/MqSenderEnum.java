@@ -8,22 +8,29 @@ package com.perfect.common.enums;
  * @Version: 1.0
  */
 public enum MqSenderEnum {
-    CALL_BACK_MQ(0, "通用队列，有回调"),
-    NORMAL_MQ(1, "通用队列，无回调");
-    private Integer code;
+    NORMAL_MQ("NORMAL_MQ", "通用队列，无回调"),
+    MQ_TENANT_ENABLE("MQ_TENANT_ENABLE", "租户启用队列"),
+    MQ_TENANT_DISABLE("MQ_TENANT_DISABLE", "租户禁用队列")
+    ;
+
+    private String code;
 
     private String name;
 
-    MqSenderEnum(Integer code, String name) {
+    MqSenderEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
     public String getName(){
         return name;
+    }
+
+    public String getContent() {
+        return "mqCode:" + code +";mqName:" +name;
     }
 }

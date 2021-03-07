@@ -83,7 +83,7 @@ public enum QuartzEnum {
 			public static final String job_group_name = "租户定时任务";
 			public static final String job_desc = "系统自动生产该项任务:租户定时任务，启用任务";
 			public static final String job_simple_name = "租户启用任务";
-			public static final String job_serial_type = "s_job_enable_task";
+			public static final String job_serial_type = "s_tenant_enable_task";
 			public static final String ok_msg = "租户定时任务：启用租户任务——执行成功";
 		}
 
@@ -99,7 +99,7 @@ public enum QuartzEnum {
 			public static final String job_group_name = "租户定时任务";
 			public static final String job_desc = "系统自动生产该项任务:租户定时任务，停止启用租户";
 			public static final String job_simple_name = "租户停止任务";
-			public static final String job_serial_type = "s_job_disable_task";
+			public static final String job_serial_type = "s_tenant_disable_task";
 			public static final String ok_msg = "租户定时任务：停止启用租户任务——执行成功";
 		}
 	}
