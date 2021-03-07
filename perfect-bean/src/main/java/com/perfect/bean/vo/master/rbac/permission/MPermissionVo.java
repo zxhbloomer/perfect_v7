@@ -1,5 +1,6 @@
 package com.perfect.bean.vo.master.rbac.permission;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.perfect.bean.vo.common.condition.PageCondition;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -71,6 +72,11 @@ public class MPermissionVo implements Serializable {
      * 是否启用(1:true-已启用,0:false-已禁用)
      */
     private Boolean is_enable;
+
+    /**
+     * 启用时间
+     */
+    private LocalDateTime is_enable_time;
 
     /**
      * 租户id

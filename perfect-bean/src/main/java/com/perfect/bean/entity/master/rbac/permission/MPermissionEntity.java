@@ -82,6 +82,12 @@ public class MPermissionEntity implements Serializable {
     private Boolean is_enable;
 
     /**
+     * 启用时间
+     */
+    @TableField("is_enable_time")
+    private LocalDateTime is_enable_time;
+
+    /**
      * 租户id
      */
     @TableField("tenant_id")
