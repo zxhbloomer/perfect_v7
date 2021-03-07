@@ -24,7 +24,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Component
-public class TenantMq {
+public class TenantMqProducter {
 
     @Autowired
     private ISJobService jobService;

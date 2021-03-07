@@ -1,16 +1,13 @@
 package com.perfect.manager.controller.sys.platform;
 
-import com.perfect.bean.entity.sys.config.dict.SDictDataEntity;
 import com.perfect.bean.pojo.result.JsonResult;
 import com.perfect.bean.result.utils.v1.ResultUtil;
-import com.perfect.bean.vo.sys.config.tenant.STenantVo;
 import com.perfect.bean.vo.sys.platform.SignUpVo;
 import com.perfect.common.annotations.RepeatSubmitAnnotion;
 import com.perfect.common.annotations.SysLogAnnotion;
-import com.perfect.core.service.sys.config.tenant.ITenantService;
 import com.perfect.core.service.sys.platform.ISignUpService;
 import com.perfect.framework.base.controller.v1.BaseController;
-import com.perfect.manager.mq.tenant.TenantMq;
+import com.perfect.manager.mq.tenant.TenantMqProducter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +32,7 @@ public class PlatformSignUpController extends BaseController {
     ISignUpService service;
 
     @Autowired
-    TenantMq tenantMq;
+    TenantMqProducter tenantMqProducter;
 
     @SysLogAnnotion("注册根据手机号码，租户名称，管理员，密码，生成注册信息")
     @ApiOperation("注册根据手机号码，租户名称，管理员，密码，生成注册信息")
@@ -49,7 +46,7 @@ public class PlatformSignUpController extends BaseController {
             // 2:执行注册
             service.signUp(bean);
             // 3:启动租户的定时任务
-            tenantMq.mqSendAfterDataSave(bean.getTenant_id());
+            tenantMqProducter.mqSendAfterDataSave(bean.getTenant_id());
         }
         return ResponseEntity.ok().body(ResultUtil.OK("OK"));
     }
