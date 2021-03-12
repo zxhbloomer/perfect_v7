@@ -4,13 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.perfect.bean.bo.session.user.UserSessionBo;
 import com.perfect.bean.bo.sys.SysInfoBo;
 import com.perfect.bean.pojo.fs.UploadFileResultPojo;
-import com.perfect.bean.utils.servlet.ServletUtil;
 import com.perfect.bean.vo.master.user.MStaffVo;
 import com.perfect.common.annotations.SysLogAnnotion;
 import com.perfect.common.constant.PerfectConstant;
 import com.perfect.common.exception.BusinessException;
 import com.perfect.common.properies.PerfectConfigProperies;
 import com.perfect.common.utils.bean.BeanUtilsSupport;
+import com.perfect.common.utils.servlet.ServletUtil;
 import com.perfect.core.service.client.user.IMUserService;
 import com.perfect.core.service.master.rbac.permission.user.IMUserPermissionRbacService;
 import com.perfect.excel.bean.importconfig.template.ExcelTemplate;
@@ -159,7 +159,7 @@ public class BaseController {
      * @return
      */
     public void setStaffInUserSession(MStaffVo staff_info){
-        UserSessionBo bo = ServletUtil.getUserSession();
+        UserSessionBo bo = (UserSessionBo) ServletUtil.getUserSession();
         bo.setStaff_info(staff_info);
 //        return bo;
     }
@@ -169,7 +169,7 @@ public class BaseController {
      * @return
      */
     public UserSessionBo getUserSession(){
-        UserSessionBo bo = ServletUtil.getUserSession();
+        UserSessionBo bo = (UserSessionBo) ServletUtil.getUserSession();
         return bo;
     }
 

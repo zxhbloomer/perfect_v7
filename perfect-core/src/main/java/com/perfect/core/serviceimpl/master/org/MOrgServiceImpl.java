@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.perfect.bean.bo.log.operate.CustomOperateBo;
 import com.perfect.bean.bo.log.operate.CustomOperateDetailBo;
+import com.perfect.bean.bo.session.user.UserSessionBo;
 import com.perfect.bean.entity.master.org.*;
 import com.perfect.bean.pojo.result.CheckResult;
 import com.perfect.bean.pojo.result.InsertResult;
@@ -14,7 +15,6 @@ import com.perfect.bean.result.utils.v1.CheckResultUtil;
 import com.perfect.bean.result.utils.v1.InsertResultUtil;
 import com.perfect.bean.result.utils.v1.UpdateResultUtil;
 import com.perfect.bean.utils.common.tree.TreeUtil;
-import com.perfect.bean.utils.servlet.ServletUtil;
 import com.perfect.bean.vo.common.component.NameAndValueVo;
 import com.perfect.bean.vo.common.component.TreeNode;
 import com.perfect.bean.vo.master.org.*;
@@ -29,6 +29,7 @@ import com.perfect.common.enums.ParameterEnum;
 import com.perfect.common.exception.BusinessException;
 import com.perfect.common.utils.ArrayPfUtil;
 import com.perfect.common.utils.bean.BeanUtilsSupport;
+import com.perfect.common.utils.servlet.ServletUtil;
 import com.perfect.core.mapper.master.org.*;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.common.ICommonComponentService;
@@ -467,7 +468,7 @@ public class MOrgServiceImpl extends BaseServiceImpl<MOrgMapper, MOrgEntity> imp
     @Override
     public UpdateResult<Integer> update(MOrgEntity entity) {
         // 设置entity
-        entity.setTenant_id((ServletUtil.getUserSession()).getTenant_Id());
+        entity.setTenant_id(((UserSessionBo)ServletUtil.getUserSession()).getTenant_Id());
         switch (entity.getType()) {
             case PerfectDictConstant.DICT_ORG_SETTING_TYPE_TENANT:
                 entity.setSerial_type(PerfectDictConstant.DICT_ORG_SETTING_TYPE_TENANT_SERIAL_TYPE);

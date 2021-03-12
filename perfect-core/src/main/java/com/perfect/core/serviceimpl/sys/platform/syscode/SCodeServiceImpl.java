@@ -10,12 +10,12 @@ import com.perfect.bean.pojo.result.UpdateResult;
 import com.perfect.bean.result.utils.v1.CheckResultUtil;
 import com.perfect.bean.result.utils.v1.InsertResultUtil;
 import com.perfect.bean.result.utils.v1.UpdateResultUtil;
-import com.perfect.bean.utils.servlet.ServletUtil;
 import com.perfect.bean.vo.sys.platform.syscode.SCodeVo;
 import com.perfect.common.constant.PerfectDictConstant;
 import com.perfect.common.exception.BusinessException;
 import com.perfect.common.utils.CodeGenerator;
 import com.perfect.common.utils.DateTimeUtil;
+import com.perfect.common.utils.servlet.ServletUtil;
 import com.perfect.core.mapper.sys.platform.SCodeMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.sys.platform.syscode.ISCodeService;
@@ -212,7 +212,7 @@ public class SCodeServiceImpl extends BaseServiceImpl<SCodeMapper, SCodeEntity> 
                 String suffix = CodeGenerator.addLeftZeroForNum(3, entity.getAuto_create());
                 // 设置更新时间和更新id
                 entity.setU_time(LocalDateTime.now());
-                entity.setU_id(((UserSessionBo)ServletUtil.getUserSession()).getAccountId());
+                entity.setU_id(((UserSessionBo) ServletUtil.getUserSession()).getAccountId());
                 // 合并并设置到entity
                 entity.setCode(entity.getPrefex() == null ? "" : entity.getPrefex().toUpperCase() + first + second_radomchar + suffix);
                 break;

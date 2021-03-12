@@ -2,14 +2,15 @@ package com.perfect.core.serviceimpl.log.operate;
 
 import com.perfect.bean.bo.log.operate.CustomOperateBo;
 import com.perfect.bean.bo.log.operate.CustomOperateDetailBo;
+import com.perfect.bean.bo.session.user.UserSessionBo;
 import com.perfect.bean.entity.log.operate.SLogOperDetailEntity;
 import com.perfect.bean.entity.log.operate.SLogOperEntity;
 import com.perfect.bean.pojo.result.InsertResult;
 import com.perfect.bean.result.utils.v1.InsertResultUtil;
-import com.perfect.bean.utils.servlet.ServletUtil;
 import com.perfect.common.constant.PerfectConstant;
 import com.perfect.common.exception.BusinessException;
 import com.perfect.common.utils.bean.BeanUtilsSupport;
+import com.perfect.common.utils.servlet.ServletUtil;
 import com.perfect.core.mapper.log.operate.SLogOperMapper;
 import com.perfect.core.service.base.v1.BaseServiceImpl;
 import com.perfect.core.service.log.operate.ISLogOperService;
@@ -46,9 +47,9 @@ public class SLogOperServiceImpl extends BaseServiceImpl<SLogOperMapper, SLogOpe
     @Override
     public InsertResult<Boolean> save(CustomOperateBo cobo) {
         SLogOperEntity sLogOperEntity = (SLogOperEntity)BeanUtilsSupport.copyProperties(cobo, SLogOperEntity.class);
-        sLogOperEntity.setOper_name(ServletUtil.getUserSession().getStaff_info().getName());
+        sLogOperEntity.setOper_name(((UserSessionBo) ServletUtil.getUserSession()).getStaff_info().getName());
         sLogOperEntity.setOper_time(LocalDateTime.now());
-        sLogOperEntity.setOper_id(ServletUtil.getUserSession().getAccountId());
+        sLogOperEntity.setOper_id(((UserSessionBo)ServletUtil.getUserSession()).getAccountId());
         sLogOperEntity.setType(cobo.getType().getName());
         mapper.insert(sLogOperEntity);
 
