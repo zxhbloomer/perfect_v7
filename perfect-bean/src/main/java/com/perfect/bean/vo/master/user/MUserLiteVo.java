@@ -48,7 +48,7 @@ public class MUserLiteVo implements Serializable {
     private String login_type;
 
     /**
-     * 登陆用户名
+     * 登录用户名
      */
     private String login_name;
 

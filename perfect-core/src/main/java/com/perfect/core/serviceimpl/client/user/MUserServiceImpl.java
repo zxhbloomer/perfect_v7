@@ -57,6 +57,12 @@ public class MUserServiceImpl extends BaseServiceImpl<MUserMapper, MUserEntity> 
     @Autowired
     private IMUserLiteService imUserLiteService;
 
+    /**
+     * 登录入口
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         MUserEntity user = getDataByName(username);

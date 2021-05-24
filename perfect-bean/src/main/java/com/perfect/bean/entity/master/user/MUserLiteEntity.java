@@ -48,7 +48,7 @@ public class MUserLiteEntity implements Serializable {
     private String login_type;
 
     /**
-     * 登陆用户名
+     * 登录用户名
      */
     @TableField("login_name")
     private String login_name;
