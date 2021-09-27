@@ -47,6 +47,7 @@
         <poi.version>4.1.2</poi.version>
         <fastjson.version>1.2.75</fastjson.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
+        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <mysql-connector-java.version>8.0.20</mysql-connector-java.version>
 <!--        <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>-->
         <kaptcha.version>2.3.2</kaptcha.version>
@@ -55,6 +56,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${project.build.springbootversion}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-redis</artifactId>
@@ -89,7 +95,7 @@
                 <groupId>org.springframework.security.oauth.boot</groupId>
                 <artifactId>spring-security-oauth2-autoconfigure</artifactId>
 <!--                <version>${project.build.springbootversion}</version>-->
-                <version>2.3.0.RELEASE</version>
+                <version>2.5.2</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -117,7 +123,7 @@
             <dependency>
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-data-redis</artifactId>
-                <version>2.5.1</version>
+                <version>2.5.2</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -264,7 +270,7 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis-plus.version}</version>
+                <version>${mybatis-plus-generator.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>

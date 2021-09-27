@@ -244,7 +244,7 @@ perfect:
     # 文件上传路径
     fs-appid: 0
     fs-groupid: ONE
-    fs-url: http://127.0.0.1:9091/perfect-fs/api/v1/file/upload
+    fs-url: http://127.0.0.1:19091/api/v1/file/upload
     fs-username: PERFECT
     log-print: true
     log-save-db: true

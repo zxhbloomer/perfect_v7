@@ -1,8 +1,10 @@
 package com.perfect.core.config.mybatis;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.perfect.core.config.mybatis.plugin.datascope.DataScopeInterceptor;
 import com.perfect.core.config.mybatis.plugin.autofill.MyBatisAutoFillHandel;
 import com.perfect.core.config.mybatis.sqlinjector.PerfectSqlInjector;
@@ -25,18 +27,13 @@ public class MybatisPlusConfig  {
      * 乐观锁
      */
     @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
-    }
-
-    /**
-     * mybatis-plus分页插件<br>
-     * 文档：http://mp.baomidou.com<br>
-     */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        return paginationInterceptor;
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 乐观锁
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        // 分页插件
+//        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.H2));
+        return interceptor;
     }
 
     /**
